@@ -11,6 +11,14 @@ const servers = {
 
 
 const peerConnection = new RTCPeerConnection(servers);
+peerConnection.ondatachannel = (event) => {
+    const dataChannel = event.channel;
+    console.log(dataChannel);
+    dataChannel.onoopen = (e) => console.log(e);
+    dataChannel.onmessage = (e) => console.log(e.data);
+    dataChannel.send('Hello back, from the datachannel!')
+};
+
 
 peerConnection.addEventListener('connectionstatechange',() => {
     console.log(peerConnection.connectionState);
@@ -82,20 +90,5 @@ start(peerConnection)
             peerConnection.addIceCandidate(candidate);
             console.log('added ICE candidate')
         };
-    });
-
-    // data channel communication
-    const dataChannel = peerConnection.createDataChannel("atem-channel");
-        
-    dataChannel.onmessage = (event) => {
-        console.log(`Received ${event.data}`);
-    };
-
-    dataChannel.onopen = () => {
-        console.log("datachannel open");
-    };
-    
-    dataChannel.onclose = () => {
-        console.log("datachannel close");
-    };
+    });    
 });
