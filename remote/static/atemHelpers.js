@@ -18,5 +18,4 @@ export default function atem() {
     testButton.addEventListener('click',() => {
         changeProgramInput(1);
     });
-
-}
+};

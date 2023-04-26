@@ -1,4 +1,6 @@
 import { start,resizeVideoElement } from "./media.js";
+import { initMultiview } from "./multiview.js";
+import { startDataChannel } from "./datachannel.js";
 import atem from "./atemHelpers.js";
 
 // get session uuid from query params
@@ -16,15 +18,21 @@ const servers = {
     ],
 };
 
+// init multiview JS
+initMultiview();
 
-const peerConnection = new RTCPeerConnection(servers);
+
+export const peerConnection = new RTCPeerConnection(servers);
+
 
 peerConnection.addEventListener('connectionstatechange',() => {
     console.log(peerConnection.connectionState);
 });
 
-const { remoteStream, remoteVideo } = await start(peerConnection);
+peerConnection.oniceconnectionstatechange = e => console.log(`ICE: ${peerConnection.iceConnectionState}`)
 
+
+export const { remoteStream, remoteVideo } = await start(peerConnection);
 
 // init socket.io
 export const socket = io();
@@ -73,15 +81,19 @@ socket.on("start-call", async () => {
     };
 
 
-    // initial call to receiver
+    startDataChannel(peerConnection);
+    
 
-    console.log("sending description");
-        peerConnection.createOffer()
-            .then((offer) => {
-                peerConnection.setLocalDescription(offer,() => {
-                    sendMessage({ description: peerConnection.localDescription });
-                });
+    // initial call to receiver
+    peerConnection.createOffer()
+        .then((offer) => {
+            peerConnection.setLocalDescription(offer,() => {
+                sendMessage({ description: peerConnection.localDescription });
+                console.log(`localDescription: ${peerConnection.localDescription}`);
+                console.log(`offer: ${offer}`);
             });
+        });
+
 
 
     // handle incoming WebRTC messages
@@ -91,6 +103,8 @@ socket.on("start-call", async () => {
 
         // final step
         if(answer) {
+            if (!answer) {console.log('No answer!!')}
+            console.log({answer});
             console.log("set remote description")
             peerConnection.setRemoteDescription(answer,() => {
                 console.log(peerConnection.connectionState);
@@ -103,23 +117,4 @@ socket.on("start-call", async () => {
             console.log('added ICE candidate')
         };
     });
-
-
-    // data channel communication
-    const dataChannel = peerConnection.createDataChannel("atem-channel");
-    
-    dataChannel.onmessage = (event) => {
-        console.log(`Received ${event.data}`);
-    };
-
-    dataChannel.onopen = () => {
-        console.log("datachannel open");
-    };
-      
-      dataChannel.onclose = () => {
-        console.log("datachannel close");
-    };
 });
-
-
-atem();

@@ -6,12 +6,10 @@ body {
     justify-content: center;
 }
 
-#remoteview,#remoteview-div {
-    height: 600px;
-    width: calc(600 * 1.78);
-    border-style: solid;
-    border-color: red;
-    border-width: 3px;
+#remoteview {
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 #selfview,#selfview-div {
