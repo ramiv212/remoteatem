@@ -1,0 +1,27 @@
+body {
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#remoteview,#remoteview-div {
+    height: 600px;
+    width: calc(600 * 1.78);
+    border-style: solid;
+    border-color: red;
+    border-width: 3px;
+}
+
+#selfview,#selfview-div {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    border-style: solid;
+    border-color: red;
+    border-width: 3px;
+    height: 150px;
+    width: calc(150px * 1.78);
+}

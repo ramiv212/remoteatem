@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <div id="remotevie-wdiv">
+            <video id="remoteview"></video>
+        </div>
+        <div id="selfview-div">
+            <video id="selfview"></video>
+        </div>
+        <select id="camera-select"></select><br>
+        <select id="audio-select"></select>
+        <br><br>
+        <button type="button" id="atem-test">Test</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/webrtc.js" type="module" async defer></script>
+
+</body>
+</html>

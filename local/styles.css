@@ -1,0 +1,18 @@
+body {
+    background-color: #282828;
+    color: #eaeaea;
+    font-family: Helvetica;
+}
+
+#app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+#selfview,#remoteview {
+    height: 200px;
+    width: calc(200px * 1.78);
+}
