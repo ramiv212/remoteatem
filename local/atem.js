@@ -1,22 +1,63 @@
 var ATEM = require('applest-atem');
 
-const initAtem = () => {  
-  var atem = new ATEM();
-  atem.connect('192.168.1.196'); // Replace your ATEM switcher. address.
 
-  atem.on('connect', function() {
-    atem.changeProgramInput(1); // ME1(0)
-    atem.changePreviewInput(2); // ME1(0)
-    atem.autoTransition(); // ME1(0)
-    atem.changeProgramInput(3, 1); // ME2(1)
-  });
+class Atem {
+  constructor(ip) {
+    this.atem = new ATEM();
 
-  atem.on('stateChanged', function(err, state) {
-    // console.log(state); // catch the ATEM state.
-  });
-  // console.log(atem.state); // or use this.
+    this.ip = ip;
 
-  return atem;
-}
+    this.atem.connect(this.ip);
 
-exports.initAtem = initAtem;
+    this.atem.on('connect',() => {
+      console.log('CONNECTED TO ATEM')
+    });
+  
+    this.actionMap = {
+      changeProgramInput: ({input, me}) => {
+        console.log(`ran actual function ${input,me}`);
+        this.atem.changeProgramInput(input, me);
+      },
+    
+      changePreviewInput: ({input, me}) =>  
+        this.atem.changeProgramInput(input,me),
+    
+      fadeToBlack: ({me}) =>  
+        this.atem.fadeToBlack(me),
+    
+      autoTransition: ({me}) =>
+        this.atem.autoTransition(me),
+    
+      cutTransition: ({me}) =>
+        this.atem.cutTransition(me),
+    
+      changeTransitionPosition: ({me, position}) =>
+        this.atem.changeTransitionPosition(me, position),
+    
+      changeUpstreamKeyState: ({number, state, me = 0}) =>
+        this.atem.changeUpstreamKeyState(number,state,me),
+    
+      changeAuxInput: ({aux, input}) => 
+        this.atem.changeAuxInput(aux,input),
+    
+      changeDownstreamKeyOn: ({number,state}) => 
+        this.atem.changeDownstreamKeyOn(number,state),
+    
+      autoDownstreamKey: ({number}) => 
+        this.atem.autoDownstreamKey(number),
+    
+      runMacro: ({number}) =>
+        this.atem.runMacro(number),
+    };
+  };
+
+
+  do({action,values}) {
+    console.log({action,values});
+    this.actionMap[action](values);
+  };
+
+};
+
+
+module.exports = Atem;

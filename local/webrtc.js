@@ -1,5 +1,3 @@
-
-
 const servers = {
     iceServers: [
         {
@@ -10,24 +8,36 @@ const servers = {
 
 
 
+// WebRTC datachannel setup
 const peerConnection = new RTCPeerConnection(servers);
+
 peerConnection.ondatachannel = (event) => {
     const dataChannel = event.channel;
-    console.log(dataChannel);
     dataChannel.onoopen = (e) => console.log(e);
-    dataChannel.onmessage = (e) => console.log(e.data);
-    dataChannel.send('Hello back, from the datachannel!')
+
+
+    dataChannel.onmessage = (e) => {
+        console.log('datachannel:')
+        console.log(e.data)
+        window['electronAPI'].sendDataToAtem(e.data);
+    };
+
+    // dataChannel.send('Hello back, from the datachannel!')
 };
 
 
+
 peerConnection.addEventListener('connectionstatechange',() => {
-    console.log(peerConnection.connectionState);
+    console.log(`WebRTC Connection Status: ${peerConnection.connectionState}`);
 });
+
+
+
 
 start(peerConnection)
     .then((remoteStream) => {
-        
-    console.log(remoteStream)
+
+    console.log('START FUNCTION')
 
     //Send message to the remote client. Must first be sent to
     // main process
@@ -37,49 +47,53 @@ start(peerConnection)
     };
 
 
-
     // add track to remote video when tracks are received
         // from peerConnection
-        peerConnection.ontrack = (e) => {
-            e.streams[0].getTracks().forEach(track => {
-                // add the tracks to the remoteStream
-                remoteStream.addTrack(track);
-                console.log(track);
-            });
+    peerConnection.ontrack = (e) => {
+        e.streams[0].getTracks().forEach(track => {
+            // add the tracks to the remoteStream
+            remoteStream.addTrack(track);
+            console.log(track);
+        });
 
-            remoteVideo.onloadedmetadata = function(e) {
-                console.log("LOADED METADATA")
-                remoteVideo.play();
-            };
+        remoteVideo.onloadedmetadata = function(e) {
+            console.log("LOADED METADATA")
+            remoteVideo.play();
         };
+    };
 
-        // then add the stream to the remote video element
-        remoteVideo.srcObject = remoteStream;
+    // then add the stream to the remote video element
+    remoteVideo.srcObject = remoteStream;
 
 
-
-        // when reveiving an ICE candidate, send it
-        peerConnection.onicecandidate = ({ candidate }) => {
-            if (candidate !== null) {
-                sendMessage({ candidate });
-            };
+    // when receiving an ICE candidate, send it to local client
+    peerConnection.onicecandidate = ({ candidate }) => {
+        console.log('sending ICE candidate!')
+        if (candidate !== null) {
+            sendMessage({ candidate });
         };
+    };
 
 
     // handle messages coming from the remote client.
     // they first come through the main process
-    window['electronAPI'].onMessageFromRemote( async (event,message) => {
+    window['electronAPI'].onMessageFromRemote( async (_event,message) => {
+
+        console.log('got a a message');
 
         const { description, candidate } = message;
 
         // initial reciept of call from caller
+        // it will take the description and set it as its local description
+        // then it will create and answer and send it back to caller
         if (description) {
+            console.log('got a description!')
             peerConnection.setRemoteDescription(description)
                 .then(() => peerConnection.createAnswer())
                 .then((answer) => {
                     peerConnection.setLocalDescription(answer,() => {
-                        sendMessage({answer: peerConnection.localDescription})
-                        console.log(peerConnection.connectionState);
+                        sendMessage({answer: peerConnection.localDescription});
+                        console.log('sent an answer!');
                     });
                 });
         };
@@ -88,7 +102,7 @@ start(peerConnection)
         // handle receiving of ICE candidates
         if (candidate && candidate !== null) {
             peerConnection.addIceCandidate(candidate);
-            console.log('added ICE candidate')
+            console.log('added ICE candidate');
         };
     });    
 });

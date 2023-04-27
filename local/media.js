@@ -68,10 +68,6 @@ async function getLocalStream(mediaDevicesObj,options) {
 
     const stream = await mediaDevicesObj.getUserMedia(constraints);
 
-    // stream.getTracks().forEach((track) => {
-    //     console.log(track.label)
-    // });
-
     return stream;
 };
 
@@ -86,6 +82,7 @@ function addMediaToDropdowns(device) {
     if (device.kind === "videoinput") cameraSelect.add(newOption);
     if (device.kind === "audioinput") audioSelect.add(newOption);
 };
+
 
 
 // change the value of dropdown selectors when media is changed
@@ -103,7 +100,6 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
     const videoDeviceToChangeTo = cameraSelect.value;
     const audioDevoceToChangeTo = audioSelect.value;
 
-
     // create new local stream with newly selected devices
     const newLocalStream = await getLocalStream(mediaDevicesObj,{
         videoDeviceName: videoDeviceToChangeTo, 
@@ -112,10 +108,12 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
     });
 
 
+
     // add new tracks to new local stream
     const newTracks = newLocalStream.getTracks(); 
     const newVideoTrack = newTracks.filter(track => track.kind === "video")[0];
     const newAudioTrack = newTracks.filter(track => track.kind === "audio")[0];
+
 
 
     // get senders from peerconnection
@@ -124,8 +122,10 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
     const audioSender = getSender(sendersArray,"audio");
 
 
+
     // add new stream to local video element
     selfVideo.srcObject = newLocalStream;
+
 
 
     // replace peerconnection tracks with tracks from new stream
@@ -135,8 +135,13 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
     resizeVideoElement(remoteVideo);
 }
 
+// this function prepares the local stream and remote stream
+// it adds the local stream to the local video element
+// and handles the change of the local stream and video element stream source
+// when the media selctor dropdown is changed
+// it returns the remote stream to be added to the remote video element when conenction is made
 
-const start = async (peerConnection) => {
+async function start(peerConnection) {
 
     const mediaDevicesObj = navigator.mediaDevices;
     const enumeratedDevices = await mediaDevicesObj.enumerateDevices();
@@ -177,4 +182,4 @@ const start = async (peerConnection) => {
 
 
     return remoteStream;
-}
+};
