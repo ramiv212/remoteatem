@@ -1,6 +1,7 @@
 const { app, BrowserWindow , ipcMain} = require('electron');
 const path = require("path");
 const { socket } = require("./socket.js");
+const { startExpress } = require('./express.js');
 const Atem = require("./atem.js");
 
 // TODO add a check that shows user if server is online
@@ -9,7 +10,7 @@ const Atem = require("./atem.js");
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 450,
-        height: 700,
+        height: 750,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -20,6 +21,7 @@ const createWindow = () => {
     win.loadFile('index.html');
     return win;
 };
+
 
 
 // sends a signal to the server to have this socket leave its own room
@@ -67,7 +69,9 @@ function handleDataToAtem(_event,data,atem) {
 
 
 app.whenReady().then(() => {
+    startExpress();
     const win = createWindow();
+
     const atem = new Atem('192.168.1.196')
 
     win.webContents.send('message-from-main','Hello,World!');

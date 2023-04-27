@@ -10,24 +10,33 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://127.0.0.1:8000/css/bootstrap.css">
         <link rel="stylesheet" href="styles.css">
+
     </head>
     <body>
         <div id="app">
+            <br>
             <h2>RemoteAtem Remote Client</h2>
 
-            <div>
-                <video id="remoteview"></video>
+            <div id="selfview-div">
+                <!-- <video id="remoteview"></video> -->
                 <video id="selfview"></video>
             </div>
 
             <span id="error-message"></span>
-            <input type="text" id="room-id-input">
-            <button type="button" id="begin-session-button">Begin Session</button>
-            <br><br>
+            <div style="width: 40%; display: flex; flex-direction:column; gap: 10px;margin-bottom: 15px;">
+                <span style="font-weight: 800; width: 200px; text-align: center;">Enter Room ID:&nbsp;</span>
+                <input type="text" class="form-control" id="room-id-input">
+            </div><br>
 
-            Video: <select id="camera-select"></select>
-            Audio <select id="audio-select"></select>
+            <button type="button" class="btn btn-light" id="begin-session-button">Begin Session</button>
+            <br>
+
+            <div style="width: 90%;">
+                Video: <select id="camera-select" class="form-select" style="margin-bottom: 15px;"></select>
+                Audio <select id="audio-select" class="form-select"></select>
+            </div>
 
 
         </div>
@@ -37,6 +46,9 @@
         <script src="./fetches.js" async defer></script>
         <script src="./media.js" async defer></script>
         <script src="./webrtc.js" async defer></script>
+        <script src="http://127.0.0.1:8000/js/bootstrap.bundle.js"></script>
+
+
 
     </body>
 </html>

@@ -10,7 +10,8 @@ class Atem {
     this.atem.connect(this.ip);
 
     this.atem.on('connect',() => {
-      console.log('CONNECTED TO ATEM')
+      console.log('CONNECTED TO ATEM');
+      console.log(this.atem.state)
     });
   
     this.actionMap = {
@@ -53,7 +54,6 @@ class Atem {
 
 
   do({action,values}) {
-    console.log({action,values});
     this.actionMap[action](values);
   };
 
