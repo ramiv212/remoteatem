@@ -26,3 +26,23 @@ body {
     width: calc(200px * 1.78);
     border-radius: 6px;
 }
+
+
+.form-control {
+    height: 35px;
+}
+
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#status-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2);
+    grid-template-rows: repeat(2);
+}
