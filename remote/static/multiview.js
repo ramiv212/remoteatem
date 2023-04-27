@@ -1,3 +1,5 @@
+import { atem } from "./atemHelpers.js"
+
 const remoteVideoElement = document.getElementById('remoteview');
 
 const multiView = document.getElementById('multiview');
@@ -21,12 +23,37 @@ const multiviewGridConfig =  {
 };
 
 
-const multiViewOnclickFunction = function (e) {
+// FOR TESTING PURPOSES ONLY, DELETE THIS LATER
+function addToCorrectQuadrant(index) {
+    const map = {
+        8:   1,
+        9:   2,
+        12:  3,
+        13:  4,
+        10:  5,
+        11:  6,
+        14:  7,
+        15:  8,
+    };
+
+    if (index >= 8) {
+        return map[index];
+    };
+};
+
+// function to handle what happens when the window is clicked on
+const multiViewOnclickFunction = function (e,i) {
     multiViewWindowDivs.forEach((window) => {
         window.classList.remove("live");
     });
 
     e.target.classList.add("live");
+    console.log(i);
+    const index = addToCorrectQuadrant(i);
+    console.log(index);
+    // temporary code to test sending messages to ATEM
+    // by tapping on quadrants
+    atem.changeProgramInput(index);
 };
 
 
@@ -34,7 +61,7 @@ function initMultiviewOnclicks(multiViewOnclickFunction) {
     const quadrants = document.getElementsByClassName('subquadrant-window');
     for (let i = 0; i < quadrants.length; i++) {
         quadrants[i].onclick = (e) => {
-            multiViewOnclickFunction(e);
+            multiViewOnclickFunction(e,i);
         };
 
         // add this quadrant div to multiViewWindowDivs
@@ -45,7 +72,7 @@ function initMultiviewOnclicks(multiViewOnclickFunction) {
     const subQuadrants = document.getElementsByClassName('quadrant-window');
     for (let i = 0; i < subQuadrants.length; i++) {
         subQuadrants[i].onclick = (e) => {
-            multiViewOnclickFunction(e);
+            multiViewOnclickFunction(e,i);
         };
 
         // add this quadrant div to multiViewWindowDivs
@@ -60,11 +87,12 @@ function initMultiviewOnclicks(multiViewOnclickFunction) {
 // to get a 16/9 size window
 function setMultiviewWidth(multiViewDiv) {
     const multiViewDivWidth = getComputedStyle(multiViewDiv).width;
-    const floatWidth = parseFloat(multiViewDivWidth) / 1.78;
-    multiViewDiv.style.height = `${floatWidth}px`;
+    const height = parseFloat(multiViewDivWidth) / 1.78;
+    multiViewDiv.style.height = `${height}px`;
 };
 
 
+// position the video right under the multiview.
 function setRemoteVideoPosition(remoteVideo,multiViewDiv) {
     const computedStyle = getComputedStyle(multiViewDiv);
     const width = computedStyle.width;
@@ -78,10 +106,10 @@ function setRemoteVideoPosition(remoteVideo,multiViewDiv) {
     remoteVideo.style.height = height;
     remoteVideo.style.top = `${top}px`;
     remoteVideo.style.left = `${left}px`;
-
 };
 
 
+multiView.style.maxWidth = `${getComputedStyle(multiView).height / 1.78}px`;
 setMultiviewWidth(multiView);
 setRemoteVideoPosition(remoteVideoElement,multiView);
 

@@ -16,10 +16,6 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-
-    border-style: solid;
-    border-color: red;
-    border-width: 3px;
     height: 150px;
     width: calc(150px * 1.78);
 }

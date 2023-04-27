@@ -1,7 +1,8 @@
 import { start,resizeVideoElement } from "./media.js";
 import { initMultiview } from "./multiview.js";
 import { startDataChannel } from "./datachannel.js";
-import atem from "./atemHelpers.js";
+import { atem } from "./atemHelpers.js"
+
 
 // get session uuid from query params
 const queryString = window.location.search;
@@ -80,9 +81,13 @@ socket.on("start-call", async () => {
         };
     };
 
-
-    startDataChannel(peerConnection);
     
+    // initialize the datachannel to exchange ATEM information
+    // and give it to the ATEM instance so that it can use it
+    // to send and receive messages
+    const dataChannel = startDataChannel(peerConnection);
+    atem.setDataChannel(dataChannel);
+
 
     // initial call to receiver
     peerConnection.createOffer()
