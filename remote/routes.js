@@ -64,8 +64,8 @@ app.post("/get-session-id", (req,res) => {
     const currentSession = doesThisRoomExist(activeSessions,roomId);
     
     if (currentSession) {
-        console.log(`Remote User: ${currentSession.localUser}`);
-        console.log(`Remote User: ${currentSession.remoteUser}`);
+        console.log(`Local User: ${currentSession.localUser.socket.id}`);
+        console.log(`Remote User: ${currentSession.remoteUser.socket.id}`);
 
         console.log(`Added local client to session of ID: ${currentSession.uuid}`);
         res.send({sessionId: currentSession.uuid})
