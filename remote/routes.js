@@ -15,7 +15,7 @@ export const io = new Server(httpServer)
 
 
 const corsOptions = {
-    origin: '127.0.0.1',
+    origin: '*'
 }
 
 
@@ -60,15 +60,19 @@ app.post("/create-session", (req,res) => {
 
 
 app.post("/get-session-id", (req,res) => {
+    console.log(req.ip);
     const roomId = req.body.roomId;
     const currentSession = doesThisRoomExist(activeSessions,roomId);
     
     if (currentSession) {
-        console.log(`Local User: ${currentSession.localUser.socket.id}`);
-        console.log(`Remote User: ${currentSession.remoteUser.socket.id}`);
+        console.log(`Local User: ${currentSession.localUser?.socket.id}`);
+        console.log(`Remote User: ${currentSession.remoteUser?.socket.id}`);
 
         console.log(`Added local client to session of ID: ${currentSession.uuid}`);
         res.send({sessionId: currentSession.uuid})
+
+        console.log(`Local User: ${currentSession.localUser?.socket.id}`);
+        console.log(`Remote User: ${currentSession.remoteUser?.socket.id}`);
     } 
     
     else {
