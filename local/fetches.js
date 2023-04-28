@@ -1,5 +1,5 @@
-const host = `https://remoteatem-production.up.railway.app`;
-// const host = `http://127.0.0.1:5000`;
+// const host = `https://remoteatem-production.up.railway.app`;
+const host = `http://127.0.0.1:5000`;
 
 
 function handleSessionIdResponse(response) {

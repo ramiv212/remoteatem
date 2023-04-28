@@ -24,14 +24,16 @@ function sendDataToAtem(data) {
 };
 
 
+// ADDING A STATUS LIGHT ON SERVER CONNECTION TO LOCAL APP
+// IS IT JSON OR NOT??
 
 
 // handle messages coming from main Electron process
-window['electronAPI'].onMainMessage((event,message) => {
-    console.log(message);
-    const parsedMessage = JSON.parse(message);
+window['electronAPI'].onMainMessage((_event,message) => {
+    console.log('MESSAGE-FROM-MAIN')
 
-    if (parsedMessage.connectedToAtem) {
+    console.log(message)
+    if (message.connectedToAtem) {
         atemConnectionStatusText.innerText = 'Connected';
         atemConnectionStatusText.className ='text-success fw-bolder';
     } else {

@@ -53,7 +53,6 @@ peerConnection.addEventListener('connectionstatechange',() => {
         sessionStatusText.className = 'text-danger fw-bolder';
     };
 
-    console.log(sessionStatusText.className);
 });
 
 

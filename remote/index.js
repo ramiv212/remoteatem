@@ -2,7 +2,7 @@ import startServer from "./routes.js";
 import startSockets from "./sockets.js";
 
 
-// TODO try adding a callback for adding the video element only when it is fully ready to go?
+// TODO add custom headers to websocket connection to make it more secure
 // TODO refactor all local client code to ES6
 // TODO add logic for when local client cannot find atem when trying to connect
 // TODO display room number on client
@@ -15,10 +15,8 @@ import startSockets from "./sockets.js";
 // TODO fix aspect ratio for multiview width on wide screen
 // maybe put multiview over video instead?
 // TODO make a map to map console inputs to quadrants in multiview
-// TODO do not allow connection on local client until connection to
-// streams is made
-// TODO add connection to ATEM logic and UI
 // TODO add some check to see if the WebRTC connection has closed, in a timely manner
+// TODO "session does not exist" server response is not changing session status textm
 
 startServer();
 startSockets();

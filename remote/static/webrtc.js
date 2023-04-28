@@ -109,7 +109,6 @@ socket.on("start-call", async () => {
         // final step
         if(answer) {
             if (!answer) {console.log('No answer!!')}
-            console.log({answer});
             console.log("set remote description")
             peerConnection.setRemoteDescription(answer,() => {
                 console.log(peerConnection.connectionState);

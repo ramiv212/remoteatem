@@ -6,8 +6,8 @@ const { atem,initAtemStateEventListeners } = require("./atem.js");
 
 // TODO add a check that shows user if server is online
 
-const url = `wss://remoteatem-production.up.railway.app`;
-// const url = `http://127.0.0.1:5000`;
+// const url = `wss://remoteatem-production.up.railway.app`;
+const url = `http://127.0.0.1:5000`;
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -45,7 +45,6 @@ function joinSocketRoom(sessionId) {
 
 // handle any messages that are sent from the Electron renderer process
 function handleMessageFromRenderer(event,message) {
-    console.log(message);
 
     // if the message contains a sessionId, join the websocket room of sessionId
     if (message.sessionId) {
@@ -54,9 +53,7 @@ function handleMessageFromRenderer(event,message) {
 
     // if atem is succesfully connected, send success message back to renderer. Else send back error.
     if (message.connectToAtem) {
-
         console.log(message);
-
         try {
             atem.connect(message.connectToAtem);
         } 
@@ -103,41 +100,66 @@ app.whenReady().then(() => {
     
     initAtemStateEventListeners(win);
 
-    win.webContents.send('message-from-main','Hello,World!');
+    // handle messages coming from remote websockets
+        // and send them to Electron renderer process
 
-    // handle the signal from the server to start the WebRTC call
-    // this will send the message via the webcontents API to the Electron renderer process
-    socket.on('start-call', () => {
-        console.log("start-call from remote");
-        win.webContents.send('start-call', {
-            startCall: true,
+    win.webContents.on('did-finish-load', () => {
+        win.webContents.send('message-from-main','Hello,World!');
+
+        socket.on("message",(message) => {
+            win.webContents.send('message-from-remote',message);
+        });
+
+
+
+        // handle the signal from the server to start the WebRTC call
+        // this will send the message via the webcontents API to the Electron renderer process
+        // socket.on('start-call', () => {
+        //     console.log("start-call from remote");
+        //     win.webContents.send('start-call', {
+        //         startCall: true,
+        //     });
+        // });
+        
+
+        ipcMain.on('response-from-sender',(_event,value) => {
+            console.log(value);
+        });
+
+        
+        // handle messages that come from the Electron renderer to the Electron main process
+        ipcMain.on('message-from-renderer', handleMessageFromRenderer);
+
+        ipcMain.on('message-to-remote', handleMessageToRemote);
+
+        ipcMain.on('data-to-atem', (event,data) => {
+            console.log('DATA TO ATEM')
+            handleDataToAtem(event,data,atem);
+        });
+    });
+
+    // let the renderer process know that the websocket server is connected
+    socket.on('connect',() => {
+        console.log('socket connect')
+        win.webContents.on('did-finish-load', () => {
+            win.webContents.send('message-from-main', {
+                connectedToServer: true
+            });
         });
     });
 
 
-    // handle messages coming from remote websockets
-    // and send them to Electron renderer process
-    socket.on("message",(message) => {
-        console.log(message)
-        win.webContents.send('message-from-remote',message);
-    });
-    
-
-    ipcMain.on('response-from-sender',(_event,value) => {
-        console.log(value);
+    // let the renderer process know that the websocket server is disconnected
+    socket.on('disconnect',() =>{
+        console.log('socket disconnect')
+            win.webContents.send('message-from-main', {
+                connectedToServer: false
+        });
     });
 
-    
-    // handle messages that come from the Electron renderer to the Electron main process
-    ipcMain.on('message-from-renderer', handleMessageFromRenderer);
 
-    ipcMain.on('message-to-remote', handleMessageToRemote);
-
-    ipcMain.on('data-to-atem', (event,data) => {
-        console.log('MESSAGE TO MAIN')
-        handleDataToAtem(event,data,atem);
-    });
 });
+
 
 
 app.on('window-all-closed', () => {
