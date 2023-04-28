@@ -11,8 +11,11 @@ const PORT = process.env.PORT ?? 5000;
 
 const app = express();
 const httpServer = createServer(app);
-export const io = new Server(httpServer)
-
+export const io = new Server(httpServer, {
+    cors: {
+      origin: "*"
+    }
+});
 
 const corsOptions = {
     origin: '*'
