@@ -5,10 +5,15 @@ const { startExpress } = require('./express.js');
 const { atem,initAtemStateEventListeners } = require("./atem.js");
 const { event } = require('jquery');
 
-// TODO add a check that shows user if server is online
 
-// const url = `wss://remoteatem-production.up.railway.app`;
-const url = `http://127.0.0.1:5000`;
+const HOST = () => {
+    if (process.env.LOCALHOST) {
+        return `http://127.0.0.1:5000`;
+    }
+    else {
+        return `wss://remoteatem-production.up.railway.app`;
+    };
+};
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -28,7 +33,7 @@ const createWindow = () => {
 };
 
 
-const socket = createSocket(url);
+const socket = createSocket(HOST);
 
 
 // sends a signal to the server to have this socket leave its own room

@@ -1,6 +1,13 @@
-// const host = `https://remoteatem-production.up.railway.app`;
-const host = `http://127.0.0.1:5000`;
 
+// check if the app is being served locally or on a server
+const HOST = () => {
+    if (process.env.LOCALHOST) {
+        return `http://127.0.0.1:5000`;
+    }
+    else {
+        return `https://remoteatem-production.up.railway.app`
+    };
+};
 
 function handleSessionIdResponse(response) {
     console.log(response)
@@ -17,7 +24,7 @@ function handleSessionIdResponse(response) {
 
 async function fetchGetSessionId(sessionId) {
     console.log('ran fetch');
-    const url = `${host}/get-session-id`;
+    const url = `${HOST}/get-session-id`;
     console.log(url);
     const body = JSON.stringify({roomId: sessionId,});
     try {
