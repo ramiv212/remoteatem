@@ -2,7 +2,7 @@ const { app, BrowserWindow , ipcMain} = require('electron');
 const path = require("path");
 const { socket } = require("./socket.js");
 const { startExpress } = require('./express.js');
-const Atem = require("./atem.js");
+const { atem,initAtemStateEventListeners } = require("./atem.js");
 
 // TODO add a check that shows user if server is online
 
@@ -10,7 +10,8 @@ const Atem = require("./atem.js");
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 450,
-        height: 750,
+        height: 900,
+        title: 'RemoteAtem Local Client',
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -19,6 +20,7 @@ const createWindow = () => {
     )
   
     win.loadFile('index.html');
+
     return win;
 };
 
@@ -34,11 +36,32 @@ function joinSocketRoom(sessionId) {
 };
 
 
+
 // handle any messages that are sent from the Electron renderer process
-function handleMessageFromRenderer(_event,message) {
+function handleMessageFromRenderer(event,message) {
+    console.log(message);
+
     // if the message contains a sessionId, join the websocket room of sessionId
     if (message.sessionId) {
         joinSocketRoom(message.sessionId);
+    };
+
+    // if atem is succesfully connected, send success message back to renderer. Else send back error.
+    if (message.connectToAtem) {
+
+        console.log(message);
+
+        try {
+            atem.connect(message.connectToAtem);
+        } 
+        
+        catch(e) {
+            const jsonifiedErrorBody = JSON.stringify({
+                atemConnectionError: e.message
+            });
+
+            event.sender.send('message-from-main',jsonifiedErrorBody);
+        };
     };
 };
 
@@ -71,11 +94,10 @@ function handleDataToAtem(_event,data,atem) {
 app.whenReady().then(() => {
     startExpress();
     const win = createWindow();
-
-    const atem = new Atem('192.168.1.196')
+    
+    initAtemStateEventListeners(win);
 
     win.webContents.send('message-from-main','Hello,World!');
-
 
     // handle the signal from the server to start the WebRTC call
     // this will send the message via the webcontents API to the Electron renderer process
@@ -113,6 +135,4 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
-  })
-
-
+  });

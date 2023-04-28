@@ -1,19 +1,12 @@
 var ATEM = require('applest-atem');
 
-
 class Atem {
-  constructor(ip) {
+  constructor() {
     this.atem = new ATEM();
 
-    this.ip = ip;
+    this.ip = null;
 
-    this.atem.connect(this.ip);
-
-    this.atem.on('connect',() => {
-      console.log('CONNECTED TO ATEM');
-      console.log(this.atem.state)
-    });
-  
+    // ATEM actions 
     this.actionMap = {
       changeProgramInput: ({input, me}) => {
         console.log(`ran actual function ${input,me}`);
@@ -53,6 +46,24 @@ class Atem {
   };
 
 
+  // helper functions
+  isIp(ip) {
+    const regex = /^((\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])$/;
+    return (regex.test(ip));
+  };
+
+  isConnected() {
+    return this.atem.state.isConnected;
+  };
+
+  connect(ip) {
+    // if this is not an IP address, return error message
+    if (!this.isIp(ip)) throw new Error('Not a valid IP address');
+
+    this.atem.connect(ip);
+  };
+
+
   do({action,values}) {
     this.actionMap[action](values);
   };
@@ -60,4 +71,41 @@ class Atem {
 };
 
 
-module.exports = Atem;
+
+function initAtemStateEventListeners(win) {
+  console.log('event listeners initialized')
+  // let the renderer process know when the ATEM is connected
+  atem.atem.on('connect',() => {
+    console.log('CONNECTED TO ATEM');
+    
+    const jsonifiedBody = JSON.stringify({
+      connectedToAtem: true
+    });
+
+    win.webContents.send('message-from-main',jsonifiedBody);
+  });
+
+
+  // let the renderer process know when the ATEM is disconnected
+  atem.atem.on('disconnect',() => {
+    console.log('CONNECTED TO ATEM');
+    
+    const jsonifiedBody = JSON.stringify({
+      connectedToAtem: false
+    });
+
+
+    // TODO add code for atem state change HERE
+
+
+    win.webContents.send('message-from-main',jsonifiedBody);
+  });
+}
+
+
+
+
+const atem = new Atem();
+
+exports.atem = atem;
+exports.initAtemStateEventListeners = initAtemStateEventListeners;

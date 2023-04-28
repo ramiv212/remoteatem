@@ -28,10 +28,33 @@ peerConnection.ondatachannel = (event) => {
 
 
 peerConnection.addEventListener('connectionstatechange',() => {
-    console.log(`WebRTC Connection Status: ${peerConnection.connectionState}`);
+    const state = peerConnection.connectionState;
+    console.log(`WebRTC Connection Status: ${state}`);
+
+    if (state === "new") {
+        sessionStatusText.innerHTML = 'New';
+        sessionStatusText.className = 'text-warning fw-bolder';
+    }
+
+    else if (state === "connecting") {
+        sessionStatusText.innerHTML = 'Connecting...';
+        sessionStatusText.className = 'text-warning fw-bolder';
+    }
+
+
+    else if (state === "connected") {
+        sessionStatusText.innerHTML = 'Connected';
+        sessionStatusText.className = 'text-success fw-bolder';
+    }
+
+
+    else if (state === 'disconnected' || 'failed' || 'closed') {
+        sessionStatusText.innerHTML = capitalize(state);
+        sessionStatusText.className = 'text-danger fw-bolder';
+    };
+
+    console.log(sessionStatusText.className);
 });
-
-
 
 
 start(peerConnection)

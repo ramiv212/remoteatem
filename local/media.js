@@ -1,16 +1,20 @@
 // Video Elements Config
-const selfVideo = document.querySelector("#selfview");
-const remoteVideo = document.querySelector("#remoteview");
+const selfVideoDiv = document.querySelector("#selfview-div");
+const selfVideo = document.createElement('video')
+selfVideo.id = 'selfview';
+const remoteVideo = document.createElement('video')
+remoteVideo.id = 'remoteview';
 const cameraSelect = document.querySelector("#camera-select");
 const audioSelect = document.querySelector("#audio-select");
+
+
+// while video is not loaded, show a loading animation where the self video lives.
+selfVideoDiv.innerHTML = loadingHtml;
 
 
 function resizeVideoElement(videoElement) {
     const computedHeightInPixels = parseInt(getComputedStyle(videoElement).height.slice(0,-2));
     const aspectRatio = computedHeightInPixels * 1.78
-
-    console.log(computedHeightInPixels,aspectRatio);
-
     remoteVideo.style.width = `${aspectRatio}px`;
 };
 
@@ -165,8 +169,14 @@ async function start(peerConnection) {
     
     // add local video stream to local video element
     selfVideo.srcObject = localStream;
+
+    // when video is done loading, stop showing loading animation and add loaded video
+    // also enable session connection button
     selfVideo.onloadedmetadata = () => {
+        selfVideoDiv.innerHTML = "";
+        selfVideoDiv.appendChild(selfVideo);
         selfVideo.play();
+        beginSessionButton.disabled = false;
     };
 
 

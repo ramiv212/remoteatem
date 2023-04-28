@@ -17,17 +17,16 @@
     <body>
         <div id="app">
             <br>
-            <h2>RemoteAtem Remote Client</h2>
+            <h2>RemoteAtem Local Client</h2>
 
             <div id="selfview-div">
                 <!-- <video id="remoteview"></video> -->
-                <video id="selfview"></video>
             </div>
 
             <span id="error-message"></span>
             <div style="width: 80%; display: flex; flex-direction:row; gap: 10px;margin-bottom: 30px;">
                 <span style="width: 190px; text-align: left;" class="center">Enter ATEM IP:&nbsp;</span>
-                <input type="text" class="form-control center" id="room-id-input">
+                <input type="text" class="form-control center" id="atem-ip-input">
             </div>
 
             <div style="width: 80%; display: flex; flex-direction:row; gap: 10px;margin-bottom: 30px;">
@@ -40,16 +39,16 @@
                     ATEM Connection Status:
                 </div>
                 <div style="grid-column-start: 2; grid-row-start: 1;">
-                    Session Connetion Status:
+                    Session Connection Status:
                 </div>
-                <div id="atem-connection-status" class="center">
-                    lorem-ipsum
+                <div id="atem-connection-status-div" class="center">
+                    <span id="atem-connection-status-text">Disconnected</span>
                 </div>
-                <div id="session-connection-status" class="center">
-                    lorem-ipsum
+                <div id="session-status-text-div" class="center">
+                    <span id="session-status-text">Disconnected</span>
                 </div>
-                <button type="button" class="btn btn-light" id="begin-session-button" style="grid-column-start: 1; grid-row-start:3;">Connect to ATEM</button>
-                <button type="button" class="btn btn-light" id="begin-session-button" style="grid-column-start: 2; grid-row-start:3;">Connect to Session</button>
+                <button type="button" class="btn btn-light" id="connect-to-atem-button" style="grid-column-start: 1; grid-row-start:3;">Connect to ATEM</button>
+                <button type="button" class="btn btn-light" id="begin-session-button" style="grid-column-start: 2; grid-row-start:3;" disabled>Connect to Session</button>
             </div>
 
             <br><br>
@@ -65,8 +64,10 @@
         
         <script src="./renderer.js"></script>
         <script src="./fetches.js" async defer></script>
+        <script src="./loading.js" async defer></script>
         <script src="./media.js" async defer></script>
         <script src="./webrtc.js" async defer></script>
+        <script src="./helpers.js" async defer></script>
         <script src="http://127.0.0.1:8000/js/bootstrap.bundle.js"></script>
 
 
