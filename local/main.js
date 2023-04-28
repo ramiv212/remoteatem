@@ -1,11 +1,13 @@
 const { app, BrowserWindow , ipcMain} = require('electron');
 const path = require("path");
-const { socket } = require("./socket.js");
+const { createSocket } = require("./socket.js");
 const { startExpress } = require('./express.js');
 const { atem,initAtemStateEventListeners } = require("./atem.js");
 
 // TODO add a check that shows user if server is online
 
+const url = `wss://remoteatem-production.up.railway.app`;
+// const url = `http://127.0.0.1:5000`;
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -25,10 +27,14 @@ const createWindow = () => {
 };
 
 
+const socket = createSocket(url);
+
 
 // sends a signal to the server to have this socket leave its own room
 // and join the room of this sessionId
 function joinSocketRoom(sessionId) {
+    console.log('join-room')
+    console.log(sessionId);
     socket.emit('join-room',{
         type: 'local',
         sessionId: sessionId
@@ -112,6 +118,7 @@ app.whenReady().then(() => {
     // handle messages coming from remote websockets
     // and send them to Electron renderer process
     socket.on("message",(message) => {
+        console.log(message)
         win.webContents.send('message-from-remote',message);
     });
     

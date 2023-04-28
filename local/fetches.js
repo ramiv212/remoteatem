@@ -1,5 +1,9 @@
+const host = `https://remoteatem-production.up.railway.app`;
+// const host = `http://127.0.0.1:5000`;
+
 
 function handleSessionIdResponse(response) {
+    console.log(response)
     if (response.error) {
         errorMessageSpan.innerText = response.error;
     }
@@ -7,14 +11,14 @@ function handleSessionIdResponse(response) {
     else if (response.sessionId) {
         console.log('ran sendmessage to main')
         sendMessageToMain({
-            sessionId: response.sessionId
-        });
+            sessionId: response.sessionId});
     };
 };
 
 async function fetchGetSessionId(sessionId) {
     console.log('ran fetch');
-    const url = "http://127.0.0.1:5000/get-session-id";
+    const url = `${host}/get-session-id`;
+    console.log(url);
     const body = JSON.stringify({roomId: sessionId,});
     try {
         fetch(url,{

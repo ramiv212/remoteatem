@@ -1,5 +1,18 @@
-const { io } = require("socket.io-client");
-const socket = io("http://127.0.0.1:5000/");
+function createSocket(url){
+    const { io } = require("socket.io-client");
+    const socket = io(url);
+
+    socket.on('connect',() => {
+        console.log('connected!');
+    });
+
+    socket.on('disconnect',() => {
+        console.log('disconnected!');
+    });
+    
+    return socket 
+};
+    
 
 
-exports.socket = socket;
+exports.createSocket = createSocket;
