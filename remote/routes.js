@@ -21,10 +21,11 @@ const corsOptions = {
 
 app.use(express.static(path.join(process.cwd(), '/static')))
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 
 
-app.get("/",cors(corsOptions), (req,res) => {
+app.get("/",(req,res) => {
     res.sendFile('login.html', {root : './views'});
 });
 
