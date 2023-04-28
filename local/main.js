@@ -3,6 +3,7 @@ const path = require("path");
 const { createSocket } = require("./socket.js");
 const { startExpress } = require('./express.js');
 const { atem,initAtemStateEventListeners } = require("./atem.js");
+const { event } = require('jquery');
 
 // TODO add a check that shows user if server is online
 
@@ -128,7 +129,9 @@ app.whenReady().then(() => {
 
         
         // handle messages that come from the Electron renderer to the Electron main process
-        ipcMain.on('message-from-renderer', handleMessageFromRenderer);
+        ipcMain.on('message-from-renderer', (event,data) => {
+            handleMessageFromRenderer(event,data,socket)
+        });
 
         ipcMain.on('message-to-remote', handleMessageToRemote);
 
@@ -139,25 +142,21 @@ app.whenReady().then(() => {
     });
 
     // let the renderer process know that the websocket server is connected
-    socket.on('connect',() => {
-        console.log('socket connect')
-        win.webContents.on('did-finish-load', () => {
-            win.webContents.send('message-from-main', {
-                connectedToServer: true
+    win.webContents.once('did-finish-load',() => {
+        socket.on('connect',() => {
+            console.log('socket connect')
+                win.webContents.send('message-from-main', {
+                    connectedToServer: true
+                });
+        });
+
+        socket.on('disconnect',() =>{
+            console.log('socket disconnect')
+                win.webContents.send('message-from-main', {
+                    connectedToServer: false
             });
         });
-    });
-
-
-    // let the renderer process know that the websocket server is disconnected
-    socket.on('disconnect',() =>{
-        console.log('socket disconnect')
-            win.webContents.send('message-from-main', {
-                connectedToServer: false
-        });
-    });
-
-
+    })
 });
 
 

@@ -50,7 +50,7 @@ export default class ActiveRemoteSession {
     forceEndIfEmpty() {
         if (!this.localUser?.socket.connected && !this.remoteUser?.socket.connected) {
             this.end();
-            console.log(`Session ${this.roomId} closed`);
+            console.log(`*** Session ${this.roomId} ended`);
         };
     };
 
@@ -66,10 +66,9 @@ export default class ActiveRemoteSession {
 
 
     checkDisconnects(user) {
-        console.log(user.socket.connected);
         user.socket.on('disconnect',() => {
             this.forceEndIfEmpty();
-            console.log('Remote User Disconnected');
+            console.log(`*** Remote User ${user.socket.id} Disconnected`);
         });
     };
 }; 

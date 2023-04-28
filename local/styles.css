@@ -49,6 +49,23 @@ body {
 }
 
 
+.signal-server-status-light-connected {
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+.signal-server-status-light-disconnected {
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+#signaling-server-status-text {
+  font-size: 14px; text-align: left; width:90%;
+}
+
+
 .lds-ring {
     display: inline-block;
     position: relative;
@@ -84,4 +101,3 @@ body {
       transform: rotate(360deg);
     }
   }
-  
