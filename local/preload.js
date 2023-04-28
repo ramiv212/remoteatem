@@ -13,4 +13,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     sendMessageToMain: (message) => ipcRenderer.send('message-from-renderer', message),
     sendMessageToRemote: (message) => ipcRenderer.send('message-to-remote', message),
     sendDataToAtem: (data) => ipcRenderer.send('data-to-atem', data),
+    hostedLocally : process.env.LOCALHOST,
 })
+

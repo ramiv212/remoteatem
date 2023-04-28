@@ -1,13 +1,17 @@
+const isLocal = window['electronAPI'].hostedLocally;
+console.log(`Is Local: ${isLocal}`);
 
 // check if the app is being served locally or on a server
-const HOST = () => {
-    if (process.env.LOCALHOST) {
+function getHost() {
+    if (isLocal) {
         return `http://127.0.0.1:5000`;
     }
     else {
-        return `https://remoteatem-production.up.railway.app`
+        return `https://remoteatem-production.up.railway.app`;
     };
 };
+
+const HOST = getHost();
 
 function handleSessionIdResponse(response) {
     console.log(response)

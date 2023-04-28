@@ -3,10 +3,9 @@ const path = require("path");
 const { createSocket } = require("./socket.js");
 const { startExpress } = require('./express.js');
 const { atem,initAtemStateEventListeners } = require("./atem.js");
-const { event } = require('jquery');
+require('dotenv').config();
 
-
-const HOST = () => {
+function getHost() {
     if (process.env.LOCALHOST) {
         return `http://127.0.0.1:5000`;
     }
@@ -14,6 +13,9 @@ const HOST = () => {
         return `wss://remoteatem-production.up.railway.app`;
     };
 };
+
+const HOST = getHost();
+console.log(HOST)
 
 const createWindow = () => {
     const win = new BrowserWindow({
