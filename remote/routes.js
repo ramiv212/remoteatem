@@ -7,25 +7,33 @@ import ActiveRemoteSession from "./ActiveRemoteSession.js"
 import { activeSessions } from "./activesessions.js"
 import path from "path"
 
+
 const app = express();
 const httpServer = createServer(app);
 export const io = new Server(httpServer)
 
+
 const corsOptions = {
     origin: '127.0.0.1',
 }
+
+
 app.use(express.static(path.join(process.cwd(), '/static')))
 app.use(bodyParser.json());
+
 
 
 app.get("/",cors(corsOptions), (req,res) => {
     res.sendFile('login.html', {root : './views'});
 });
 
+
+
 // returns active session if it exists
 export function doesThisRoomExist(activeSessions,roomId) {
     return activeSessions.filter(session => session.roomId === roomId)[0];
 };
+
 
 
 app.post("/create-session", (req,res) => {

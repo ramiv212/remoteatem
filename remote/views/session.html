@@ -5,16 +5,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="multiview.css">
     <title>Document</title>
 </head>
 <body>
     
     <div id="app">
-        <div id="remotevie-wdiv">
-            <video id="remoteview"></video>
+        <video id="remoteview"></video>
+
+        <video id="selfview"></video>
+    </div>
+
+
+
+    <div id="multiview-container">
+        <div id="top-bar" style="display: flex; flex-direction: column; gap: 4px;">
+            <div>
+                <button id="windowButton1">Window1</button>
+                <button id="windowButton2">Window2</button>
+            </div>
+            <div>
+                <button id="windowButton3">Window3</button>
+                <button id="windowButton4">Window4</button>
+            </div>
         </div>
-        <div id="selfview-div">
-            <video id="selfview"></video>
+        <div id="multiview">
+            <div class="multiviewQuadrant" id="q1">
+                <div class="quadrant-window" id="qw1"></div>
+                <div class="subquadrants" id="s1">
+                    <div class="subquadrant-window" id="q1w1">
+                    </div>
+                    <div class="subquadrant-window" id="q1w2">
+                    </div>
+                    <div class="subquadrant-window" id="q1w3">
+                    </div>
+                    <div class="subquadrant-window" id="q1w4">
+                    </div>
+                </div>
+            </div>
+            <div class="multiviewQuadrant" id="q2">
+                <div class="quadrant-window" id="qw2"></div>
+                <div class="subquadrants" id="s2"> 
+                    <div class="subquadrant-window" id="q2w1">
+                    </div> 
+                    <div class="subquadrant-window" id="q2w2">
+                    </div> 
+                    <div class="subquadrant-window" id="q2w3">
+                    </div> 
+                    <div class="subquadrant-window" id="q2w4">
+                    </div>
+                </div>
+            </div>
+            <div class="multiviewQuadrant" id="q3">
+                <div class="quadrant-window" id="qw3"></div>
+                <div class="subquadrants" id="s3">
+                    <div class="subquadrant-window" id="q3w1">
+                    </div>
+                    <div class="subquadrant-window" id="q3w2">
+                    </div>
+                    <div class="subquadrant-window" id="q3w3">
+                    </div>
+                    <div class="subquadrant-window" id="q3w4">
+                    </div>
+                </div>
+            </div>
+            <div class="multiviewQuadrant" id="q4">
+                <div class="quadrant-window" id="qw4"></div>
+                <div class="subquadrants" id="s4">
+                    <div class="subquadrant-window" id="q4w1">
+                    </div>
+                    <div class="subquadrant-window" id="q4w2">
+                    </div>
+                    <div class="subquadrant-window" id="q4w3">
+                    </div>
+                    <div class="subquadrant-window" id="q4w4">
+                    </div>
+                </div>
+            </div>
         </div>
         <select id="camera-select"></select><br>
         <select id="audio-select"></select>
@@ -22,8 +89,10 @@
         <button type="button" id="atem-test">Test</button>
     </div>
 
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="/webrtc.js" type="module" async defer></script>
+
 
 </body>
 </html>
