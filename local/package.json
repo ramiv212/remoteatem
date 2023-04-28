@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "localStart": "set LOCALHOST=1 &&  electron .",
+    "remoteStart": "set LOCALHOST=1 &&  electron ."
   },
   "author": "",
   "license": "ISC",

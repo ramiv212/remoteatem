@@ -77,12 +77,10 @@ function initAtemStateEventListeners(win) {
   // let the renderer process know when the ATEM is connected
   atem.atem.on('connect',() => {
     console.log('CONNECTED TO ATEM');
-    
-    const jsonifiedBody = JSON.stringify({
+
+    win.webContents.send('message-from-main',{
       connectedToAtem: true
     });
-
-    win.webContents.send('message-from-main',jsonifiedBody);
   });
 
 

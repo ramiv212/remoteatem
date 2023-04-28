@@ -31,6 +31,7 @@ function sendDataToAtem(data) {
 // handle messages coming from main Electron process
 window['electronAPI'].onMainMessage((_event,message) => {
     console.log('MESSAGE-FROM-MAIN')
+    console.log(message)
 
     // messages from main procces that tell the renderer if the ATEM is connected
     if (message.connectedToAtem) {
