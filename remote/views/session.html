@@ -7,6 +7,49 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="multiview.css">
     <title>Document</title>
+
+    <script>
+        if (console.everything === undefined)
+{
+    console.everything = [];
+
+    console.defaultLog = console.log.bind(console);
+    console.log = function(){
+        console.everything.push({"type":"log", "datetime":Date().toLocaleString(), "value":Array.from(arguments)});
+        console.defaultLog.apply(console, arguments);
+
+        mylog.innerHTML = "";
+
+        for (let i = 1; i < console.everything.length; i++) {
+            let log = console.everything[i].value[0]
+            if (typeof log == "string" || typeof log == "number") {
+                mylog.innerHTML += log + '<br>';
+            } else {
+                let objectLog = Object.entries(log);
+                mylog.innerHTML += objectLog[0] + " " + objectLog[1] +  '<br>';
+            }
+
+        };
+
+    }
+    console.defaultError = console.error.bind(console);
+    console.error = function(){
+        console.everything.push({"type":"error", "datetime":Date().toLocaleString(), "value":Array.from(arguments)});
+        console.defaultError.apply(console, arguments);
+    }
+    console.defaultWarn = console.warn.bind(console);
+    console.warn = function(){
+        console.everything.push({"type":"warn", "datetime":Date().toLocaleString(), "value":Array.from(arguments)});
+        console.defaultWarn.apply(console, arguments);
+    }
+    console.defaultDebug = console.debug.bind(console);
+    console.debug = function(){
+        console.everything.push({"type":"debug", "datetime":Date().toLocaleString(), "value":Array.from(arguments)});
+        console.defaultDebug.apply(console, arguments);
+    }
+}
+    </script>
+    
 </head>
 <body>
     
@@ -86,13 +129,14 @@
         <select id="camera-select"></select><br>
         <select id="audio-select"></select>
         <br><br>
-        <button type="button" id="atem-test">Test</button>
+
+        <div id="mylog"></div>
     </div>
 
+    <script>console.log(console.everything)</script>
+    <
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/webrtc.js" type="module" async defer></script>
-
-
 </body>
 </html>
