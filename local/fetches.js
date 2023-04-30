@@ -1,17 +1,9 @@
-const isLocal = window['electronAPI'].hostedLocally;
-console.log(`Is Local: ${isLocal}`);
+import { getHost } from "./index.js";
+import { sendMessageToMain } from "./renderer.js";
 
-// check if the app is being served locally or on a server
-function getHost() {
-    if (isLocal) {
-        return `http://127.0.0.1:5000`;
-    }
-    else {
-        return `https://remoteatem-production.up.railway.app`;
-    };
-};
 
 const HOST = getHost();
+
 
 function handleSessionIdResponse(response) {
     console.log(response)
@@ -26,7 +18,7 @@ function handleSessionIdResponse(response) {
     };
 };
 
-async function fetchGetSessionId(sessionId) {
+export async function fetchGetSessionId(sessionId) {
     console.log('ran fetch');
     const url = `${HOST}/get-session-id`;
     console.log(url);

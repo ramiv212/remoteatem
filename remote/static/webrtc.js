@@ -19,6 +19,7 @@ const servers = {
     ],
 };
 
+
 // init multiview JS
 initMultiview();
 
@@ -48,6 +49,8 @@ socket.emit("join-room",{
 
 // determine if client caller
 socket.on("start-call", async () => {
+
+    console.log('start call!!')
 
     //Function to send message in a room
     function sendMessage(message, room) {

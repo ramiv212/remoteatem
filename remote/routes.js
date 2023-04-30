@@ -14,7 +14,7 @@ const httpServer = createServer(app);
 export const io = new Server(httpServer, {
     cors: {
       origin: "*"
-    }
+    },
 });
 
 const corsOptions = {

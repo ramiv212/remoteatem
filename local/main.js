@@ -6,7 +6,7 @@ const { atem,initAtemStateEventListeners } = require("./atem.js");
 require('dotenv').config();
 
 function getHost() {
-    if (process.env.LOCALHOST) {
+    if (process.env.LOCALHOST == 1) {
         return `http://127.0.0.1:5000`;
     }
     else {
@@ -50,7 +50,6 @@ function joinSocketRoom(sessionId) {
 };
 
 
-
 // handle any messages that are sent from the Electron renderer process
 function handleMessageFromRenderer(event,message) {
 
@@ -61,6 +60,7 @@ function handleMessageFromRenderer(event,message) {
 
     // if atem is succesfully connected, send success message back to renderer. Else send back error.
     if (message.connectToAtem) {
+        console.log('message from renderer')
         console.log(message);
         try {
             atem.connect(message.connectToAtem);
@@ -137,6 +137,7 @@ app.whenReady().then(() => {
         
         // handle messages that come from the Electron renderer to the Electron main process
         ipcMain.on('message-from-renderer', (event,data) => {
+            console.log(data);
             handleMessageFromRenderer(event,data,socket)
         });
 

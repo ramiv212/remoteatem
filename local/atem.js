@@ -1,5 +1,6 @@
 var ATEM = require('applest-atem');
 
+
 class Atem {
   constructor() {
     this.atem = new ATEM();
@@ -53,14 +54,19 @@ class Atem {
   };
 
   isConnected() {
-    return this.atem.state.isConnected;
+    return this.atem;
   };
 
   connect(ip) {
+    console.log(`Connect to ${ip}`)
     // if this is not an IP address, return error message
     if (!this.isIp(ip)) throw new Error('Not a valid IP address');
 
     this.atem.connect(ip);
+  };
+
+  disconnect() {
+    this.atem.disconnect();
   };
 
 

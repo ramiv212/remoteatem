@@ -1,8 +1,13 @@
+import { 
+    loadingHtml,
+    beginSessionButton,
+} from "./elements.js";
+
 // Video Elements Config
 const selfVideoDiv = document.querySelector("#selfview-div");
 const selfVideo = document.createElement('video')
 selfVideo.id = 'selfview';
-const remoteVideo = document.createElement('video')
+export const remoteVideo = document.createElement('video')
 remoteVideo.id = 'remoteview';
 const cameraSelect = document.querySelector("#camera-select");
 const audioSelect = document.querySelector("#audio-select");
@@ -145,7 +150,7 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
 // when the media selctor dropdown is changed
 // it returns the remote stream to be added to the remote video element when conenction is made
 
-async function start(peerConnection) {
+export default async function start(peerConnection) {
 
     const mediaDevicesObj = navigator.mediaDevices;
     const enumeratedDevices = await mediaDevicesObj.enumerateDevices();
