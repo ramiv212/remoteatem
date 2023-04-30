@@ -12,14 +12,12 @@ function handleSessionIdResponse(response) {
     }
 
     else if (response.sessionId) {
-        console.log('ran sendmessage to main')
         sendMessageToMain({
             sessionId: response.sessionId});
     };
 };
 
 export async function fetchGetSessionId(sessionId) {
-    console.log('ran fetch');
     const url = `${HOST}/get-session-id`;
     console.log(url);
     const body = JSON.stringify({roomId: sessionId,});

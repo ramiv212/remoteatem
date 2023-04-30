@@ -95,11 +95,14 @@ socket.on("start-call", async () => {
     // initial call to receiver
     peerConnection.createOffer()
         .then((offer) => {
-            peerConnection.setLocalDescription(offer,() => {
-                sendMessage({ description: peerConnection.localDescription });
-                console.log(`localDescription: ${peerConnection.localDescription}`);
-                console.log(`offer: ${offer}`);
-            });
+            console.log(`*** OFFER`)
+            console.log(offer);
+            peerConnection.setLocalDescription(offer)
+                .then((offer) => {
+                    console.log(`localDescription: ${peerConnection.localDescription}`);
+                    sendMessage({ description: peerConnection.localDescription });
+                    console.log(`*** SENT OFFER: ${offer}`);
+                });
         });
 
 

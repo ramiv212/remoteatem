@@ -17,6 +17,7 @@ import startSockets from "./sockets.js";
 // TODO make a map to map console inputs to quadrants in multiview
 // TODO add some check to see if the WebRTC connection has closed, in a timely manner
 // TODO "session does not exist" server response is not changing session status textm
+// TODO add a way to be checking if new media device has been added and add it to the list
 
 startServer();
 startSockets();
