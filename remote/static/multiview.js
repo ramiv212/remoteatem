@@ -26,14 +26,14 @@ const multiviewGridConfig =  {
 // FOR TESTING PURPOSES ONLY, DELETE THIS LATER
 function addToCorrectQuadrant(index) {
     const map = {
-        8:   1,
-        9:   2,
-        12:  3,
-        13:  4,
-        10:  5,
-        11:  6,
-        14:  7,
-        15:  8,
+        8:   3,
+        9:   4,
+        12:  5,
+        13:  6,
+        10:  0,
+        11:  9,
+        14:  8,
+        15:  10,
     };
 
     if (index >= 8) {
