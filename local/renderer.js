@@ -9,6 +9,7 @@ import {
  } from "./elements.js";
  import { fetchGetSessionId } from "./fetches.js";
 
+ 
 // exposed APIs from preload.js which send messages from
 // renderer to Node
 

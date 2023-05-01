@@ -9,6 +9,13 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const sessionId = urlParams.get('sessionId');
 console.log({sessionId});
+console.log('watt')
+
+// init socket.io
+export const socket = io();
+
+socket.on('connect', () => console.log(socket))
+
 
 
 const servers = {
@@ -18,6 +25,7 @@ const servers = {
         },
     ],
 };
+
 
 
 // init multiview JS
@@ -31,13 +39,16 @@ peerConnection.addEventListener('connectionstatechange',() => {
     console.log(peerConnection.connectionState);
 });
 
+
+
 peerConnection.oniceconnectionstatechange = e => console.log(`ICE: ${peerConnection.iceConnectionState}`)
+
 
 
 export const { remoteStream, remoteVideo } = await start(peerConnection);
 
-// init socket.io
-export const socket = io();
+console.log('ran')
+// PROBLEM IS HERE
 
 
 // join room of sessionId

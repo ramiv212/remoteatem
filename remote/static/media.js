@@ -139,6 +139,9 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
 export async function start(peerConnection) {
 
     const mediaDevicesObj = navigator.mediaDevices;
+
+    console.log({mediaDevicesObj})
+
     const enumeratedDevices = await mediaDevicesObj.enumerateDevices();
 
     const localStream = await getLocalStream(mediaDevicesObj,{initialSetup: true});
@@ -157,12 +160,33 @@ export async function start(peerConnection) {
         // change the media select dropdown to the correct media
         setSelectorsToCurrentTrack(track);
     }
+
+
+    navigator.permissions.query({name: 'microphone'})
+    .then((permissionObj) => {
+    console.log(permissionObj.state);
+    })
+    .catch((error) => {
+    console.log('Got error :', error);
+    })
+
+    navigator.permissions.query({name: 'camera'})
+    .then((permissionObj) => {
+    console.log(permissionObj.state);
+
+        // add local video stream to local video element
+        selfVideo.srcObject = localStream;
+        selfVideo.onloadedmetadata = () => {
+            selfVideo.play();
+        };
+
+    })
+    .catch((error) => {
+    console.log('Got error :', error);
+    })
+
     
-    // add local video stream to local video element
-    selfVideo.srcObject = localStream;
-    selfVideo.onloadedmetadata = () => {
-        selfVideo.play();
-    };
+ 
 
 
     // change local media sources when video select dropdown is changed

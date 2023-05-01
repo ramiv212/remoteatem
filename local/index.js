@@ -7,7 +7,7 @@ export function getHost() {
     console.log(`Is Local: ${isLocal}`);
 
     if (isLocal == 1) {
-        return `http://127.0.0.1:5000`;
+        return `https://127.0.0.1:5000`;
     }
     else {
         return `https://remoteatem-production.up.railway.app`;

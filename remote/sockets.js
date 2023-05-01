@@ -2,6 +2,7 @@ import { io } from "./routes.js"
 import User from "./User.js";
 import { activeSessions,doesThisSessionExist } from "./activesessions.js";
 
+
 export default function startSockets() {
     io.on("connection", (socket) => {
         console.log("connection");

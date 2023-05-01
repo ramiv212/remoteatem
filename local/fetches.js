@@ -1,5 +1,6 @@
 import { getHost } from "./index.js";
 import { sendMessageToMain } from "./renderer.js";
+import { sessionStatusText } from "./elements.js";
 
 
 const HOST = getHost();
@@ -24,6 +25,7 @@ export async function fetchGetSessionId(sessionId) {
     try {
         fetch(url,{
             method: "POST",
+            mode: "cors",
             headers: {
                 "Content-Type": "application/json"
             },

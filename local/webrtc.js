@@ -2,6 +2,7 @@ import start from "./media.js";
 import { remoteVideo } from "./media.js";
 import { sendMessageToRemote } from "./renderer.js";
 import { sessionStatusText } from "./elements.js";
+import { capitalize } from "./helpers.js"
 
 const servers = {
     iceServers: [

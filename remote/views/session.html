@@ -11,9 +11,9 @@
 <body>
     
     <div id="app">
-        <video id="remoteview"></video>
+        <video id="remoteview" autoplay="" muted="" playsinline=""></video>
 
-        <video id="selfview"></video>
+        <video id="selfview" autoplay="" muted="" playsinline=""></video>
     </div>
 
 
@@ -88,9 +88,6 @@
         <br><br>
 
     </div>
-
-    <script>console.log(console.everything)</script>
-    <
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/webrtc.js" type="module" async defer></script>

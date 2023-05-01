@@ -1,5 +1,10 @@
 import startServer from "./routes.js";
 import startSockets from "./sockets.js";
+import { printMyIp } from "./helpers.js";
+
+
+import tls from 'tls';
+tls.DEFAULT_MAX_VERSION = 'TLSv1.2';
 
 
 // TODO add custom headers to websocket connection to make it more secure
@@ -18,6 +23,8 @@ import startSockets from "./sockets.js";
 // TODO add some check to see if the WebRTC connection has closed, in a timely manner
 // TODO "session does not exist" server response is not changing session status textm
 // TODO add a way to be checking if new media device has been added and add it to the list
+    
 
+printMyIp();
 startServer();
 startSockets();
