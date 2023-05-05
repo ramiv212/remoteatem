@@ -2,7 +2,7 @@
   "name": "local",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "./main/main.js",
   "scripts": {
     "localStart": "set LOCALHOST=1 &&  electron .",
     "remoteStart": "set LOCALHOST=0 &&  electron ."

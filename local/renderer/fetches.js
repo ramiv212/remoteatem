@@ -1,9 +1,11 @@
 import { getHost } from "./index.js";
 import { sendMessageToMain } from "./renderer.js";
-import { sessionStatusText } from "./elements.js";
+import { sessionStatusText,errorMessageSpan } from "./elements.js";
 
 
 const HOST = getHost();
+
+// TODO implement auth to websocket
 
 
 function handleSessionIdResponse(response) {

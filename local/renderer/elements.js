@@ -6,7 +6,7 @@ const sessionStatusText = document.getElementById("session-status-text");
 const atemConnectionStatusText = document.getElementById('atem-connection-status-text');
 const signalServerStatusLight = document.getElementById('signal-server-status-light');
 const loadingHtml = '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
-
+const errorMessageSpan = document.getElementById('error-message');
 
 export {
     roomIdInput,
@@ -16,5 +16,6 @@ export {
     sessionStatusText,
     atemConnectionStatusText,
     signalServerStatusLight,
-    loadingHtml
+    loadingHtml,
+    errorMessageSpan
 };
