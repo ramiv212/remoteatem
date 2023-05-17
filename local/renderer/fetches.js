@@ -1,21 +1,22 @@
-import { getHost } from "./index.js";
-import { sendMessageToMain } from "./renderer.js";
-import { sessionStatusText,errorMessageSpan } from "./elements.js";
+import { getHost } from "./rendererhelpers.js";
+import { sendSessionId } from "./renderer.js";
+import { sessionStatusText } from "./elements.js";
 
 
 const HOST = getHost();
-
-// TODO implement auth to websocket
 
 
 function handleSessionIdResponse(response) {
     console.log(response)
     if (response.error) {
-        errorMessageSpan.innerText = response.error;
+        console.log('error')
+        sessionStatusText.className = 'text-danger fw-bolder';
+        sessionStatusText.innerText = response.error;
     }
 
     else if (response.sessionId) {
-        sendMessageToMain({
+        console.log('received ID')
+        sendSessionId({
             sessionId: response.sessionId});
     };
 };

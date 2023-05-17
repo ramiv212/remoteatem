@@ -5,7 +5,7 @@ import { activeSessions,doesThisSessionExist } from "./activesessions.js";
 
 export default function startSockets() {
     io.on("connection", (socket) => {
-        console.log("connection");
+        console.log(`\n${socket.id} connected`);
 
 
         // client will send a message to server asking to join its socket
@@ -39,6 +39,12 @@ export default function startSockets() {
         // relay any websocket messages from one socket to the other
         socket.on("message", (data) => {
             socket.broadcast.emit("message",data);
+        });
+
+        // user disconnect logic
+        socket.on("disconnect", (reason) => {
+            
+            console.log(`${socket.id} disconnected because of ${reason}`);
         });
     });
 };

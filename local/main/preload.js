@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onMessageFromRemote: (message) => ipcRenderer.on('message-from-remote',message),
     onDataFromAtem: (data) => ipcRenderer.on('data-from-atem',data),
 
+    sendSessionId: (message) => ipcRenderer.send('session-id', message),
     sendMessageToMain: (message) => ipcRenderer.send('message-from-renderer', message),
     sendMessageToRemote: (message) => ipcRenderer.send('message-to-remote', message),
     sendDataToAtem: (data) => ipcRenderer.send('data-to-atem', data),

@@ -56,7 +56,7 @@ export default class ActiveRemoteSession {
 
 
     printSessions() {
-        console.log(`*** Active Sessions:***`)
+        console.log(`*** Active Sessions: ***`)
         activeSessions.forEach((session) => {
             console.log(`\n   Session: ${this.roomId}`)
             console.log(`       Local User: ${this.localUser.socket.id}`);
@@ -65,6 +65,7 @@ export default class ActiveRemoteSession {
     };
 
 
+    // add 'disconnect' event listener to each socket when user is added
     checkDisconnects(user) {
         user.socket.on('disconnect',() => {
             this.forceEndIfEmpty();

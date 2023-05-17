@@ -1,4 +1,5 @@
 import { atem } from "./atemHelpers.js"
+import initDrawImage from "./multiviewcanvas.js";
 
 const remoteVideoElement = document.getElementById('remoteview');
 
@@ -86,9 +87,7 @@ function initMultiviewOnclicks(multiViewOnclickFunction) {
 // set this new float value to the window height
 // to get a 16/9 size window
 function setMultiviewWidth(multiViewDiv) {
-    const multiViewDivWidth = getComputedStyle(multiViewDiv).width;
-    const height = parseFloat(multiViewDivWidth) / 1.78;
-    multiViewDiv.style.height = `${height}px`;
+    multiViewDiv.style.width = `${window.innerWidth * 0.7}px`;
 };
 
 
@@ -99,8 +98,6 @@ function setRemoteVideoPosition(remoteVideo,multiViewDiv) {
     const height = computedStyle.height;
     const left = multiView.getBoundingClientRect().x;
     const top = multiView.getBoundingClientRect().y;
-
-    console.log(multiViewDiv.getBoundingClientRect())
     
     remoteVideo.style.width = width;
     remoteVideo.style.height = height;
@@ -109,14 +106,19 @@ function setRemoteVideoPosition(remoteVideo,multiViewDiv) {
 };
 
 
-multiView.style.maxWidth = `${getComputedStyle(multiView).height / 1.78}px`;
 setMultiviewWidth(multiView);
 setRemoteVideoPosition(remoteVideoElement,multiView);
+initDrawImage(remoteVideoElement);
 
 
 // check if window is resized
-window.addEventListener('resize', (e) => {
+window.addEventListener('resize', (_e) => {
     setMultiviewWidth(multiView);
+    setRemoteVideoPosition(remoteVideoElement,multiView);
+});
+
+
+window.addEventListener('scroll',(_e) => {
     setRemoteVideoPosition(remoteVideoElement,multiView);
 });
 

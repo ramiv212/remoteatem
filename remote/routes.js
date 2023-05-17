@@ -34,6 +34,7 @@ app.get("/",(req,res) => {
 
 
 
+
 // returns active session if it exists
 export function doesThisRoomExist(activeSessions,roomId) {
     return activeSessions.filter(session => session.roomId === roomId)[0];

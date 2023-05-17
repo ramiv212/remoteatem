@@ -1,8 +1,8 @@
 import start from "./media.js";
 import { remoteVideo } from "./media.js";
-import { sendMessageToRemote } from "./renderer.js";
+import { sendMessageToRemote,sendMessageToMain } from "./renderer.js";
 import { sessionStatusText } from "./elements.js";
-import { capitalize } from "./helpers.js"
+import { capitalize } from "./rendererhelpers.js"
 
 const servers = {
     iceServers: [
@@ -14,22 +14,30 @@ const servers = {
 
 
 export default function initWebRTC () {
+
+    console.log('InitWEBRTC');
+
     // WebRTC datachannel setup
     const peerConnection = new RTCPeerConnection(servers);
 
     peerConnection.ondatachannel = (event) => {
-        // console.log("*** DATACHANNEL")
+
         const dataChannel = event.channel;
+
         dataChannel.onoopen = (e) => console.log(e);
 
-
         dataChannel.onmessage = (e) => {
-            console.log('datachannel:')
-            console.log(e.data)
+            
+            if (e.dataChannelState) {
+                console.log(`dataChannel is ${e.dataChannelState}`);
+            
+                sendMessageToMain({
+                    dataChannelState: e.dataChannelState
+                });
+            };
+
             window['electronAPI'].sendDataToAtem(e.data);
         };
-
-        // dataChannel.send('Hello back, from the datachannel!')
     };
 
 

@@ -133,3 +133,4 @@ dist
 
 # ssl
 .pem
+*.pem

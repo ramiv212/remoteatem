@@ -19,8 +19,9 @@ export function startDataChannel(peerConnection) {
 
     dataChannel.onopen = () => {
         const message = JSON.stringify({
-            Hello: "World!"
+            dataChannelState: dataChannel.readyState
         });
+        
         dataChannel.send(message);
         console.log(`dataChannel is ${dataChannel.readyState}`);
     };

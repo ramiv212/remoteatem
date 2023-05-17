@@ -13,6 +13,10 @@ import {
 // exposed APIs from preload.js which send messages from
 // renderer to Node
 
+export function sendSessionId(message) {
+    window['electronAPI'].sendSessionId(message);
+};
+
 export function sendMessageToMain(message) {
     window['electronAPI'].sendMessageToMain(message);
 };

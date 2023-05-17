@@ -16,8 +16,6 @@ export const socket = io();
 
 socket.on('connect', () => console.log(socket))
 
-
-
 const servers = {
     iceServers: [
         {
@@ -44,11 +42,7 @@ peerConnection.addEventListener('connectionstatechange',() => {
 peerConnection.oniceconnectionstatechange = e => console.log(`ICE: ${peerConnection.iceConnectionState}`)
 
 
-
 export const { remoteStream, remoteVideo } = await start(peerConnection);
-
-console.log('ran')
-// PROBLEM IS HERE
 
 
 // join room of sessionId

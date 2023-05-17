@@ -11,7 +11,21 @@
 <body>
     
     <div id="app">
-        <video id="remoteview" autoplay="" muted="" playsinline=""></video>
+        
+        <canvas width="1920" height="1080" style="margin: auto;"></canvas>
+            <video
+            id="remoteview"
+            preload="auto"
+            autoplay
+            playsinline
+            webkit-playsinline
+            muted
+            hidden
+            >
+        </video>
+
+
+        <!-- <video id="remoteview" autoplay="" muted="" playsinline="" hidden></video> -->
 
         <video id="selfview" autoplay="" muted="" playsinline=""></video>
     </div>
@@ -29,6 +43,7 @@
                 <button id="windowButton4">Window4</button>
             </div>
         </div>
+
         <div id="multiview">
             <div class="multiviewQuadrant" id="q1">
                 <div class="quadrant-window" id="qw1"></div>
@@ -83,6 +98,8 @@
                 </div>
             </div>
         </div>
+
+        
         <select id="camera-select"></select><br>
         <select id="audio-select"></select>
         <br><br>

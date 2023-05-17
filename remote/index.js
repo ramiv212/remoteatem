@@ -6,9 +6,9 @@ import { printMyIp } from "./helpers.js";
 import tls from 'tls';
 tls.DEFAULT_MAX_VERSION = 'TLSv1.2';
 
-
+// TODO add session token so that refreshing browser won't disconnect session
+// TODO use datachannel instead of websockets to handle user connect/disconnect
 // TODO add custom headers to websocket connection to make it more secure
-// TODO refactor all local client code to ES6
 // TODO add logic for when local client cannot find atem when trying to connect
 // TODO display room number on client
 // TODO better server logic for joining client to client in a room
