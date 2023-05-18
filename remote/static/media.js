@@ -9,6 +9,7 @@ export function resizeVideoElement(videoElement) {
     const computedHeightInPixels = parseInt(getComputedStyle(videoElement).height.slice(0,-2));
     const aspectRatio = computedHeightInPixels * 1.78
 
+    console.log(videoElement);
     console.log(computedHeightInPixels,aspectRatio);
 
     remoteVideo.style.width = `${aspectRatio}px`;
@@ -132,7 +133,7 @@ async function handleMediaChange(mediaDevicesObj,peerConnection) {
     videoSender.replaceTrack(newVideoTrack);
     audioSender.replaceTrack(newAudioTrack);
 
-    resizeVideoElement(remoteVideo);
+    // resizeVideoElement(remoteVideo);
 }
 
 

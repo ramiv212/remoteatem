@@ -106,7 +106,7 @@ socket.on("start-call", async () => {
                 .then((offer) => {
                     console.log(`localDescription: ${peerConnection.localDescription}`);
                     sendMessage({ description: peerConnection.localDescription });
-                    console.log(`*** SENT OFFER: ${offer}`);
+                    console.log(`*** SENT OFFER: ${peerConnection.localDescription}`);
                 });
         });
 

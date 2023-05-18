@@ -6,6 +6,7 @@ import { printMyIp } from "./helpers.js";
 import tls from 'tls';
 tls.DEFAULT_MAX_VERSION = 'TLSv1.2';
 
+// TODO add a check to make sure you have connection to the internet in local client
 // TODO add session token so that refreshing browser won't disconnect session
 // TODO use datachannel instead of websockets to handle user connect/disconnect
 // TODO add custom headers to websocket connection to make it more secure
