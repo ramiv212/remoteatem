@@ -52,6 +52,8 @@ export default class Multiview {
         this.initQuadrants();
         this.initSubQuadrants();
 
+        this.quadrants[0].isDivided = false;
+        this.quadrants[1].isDivided = false;
         this.quadrants[2].isDivided = true;
         this.quadrants[3].isDivided = true;
 
@@ -144,19 +146,21 @@ export default class Multiview {
 
 
     initWhiteGrid() {
+
         for (let i = 0; i < this.quadrants.length; i++) {
 
             // if the config for this quadrant is set to true, then draw a subQuadrant of four squares sin this quadrant
-            console.log(this.quadrants[i].isDivided)
-            if (this.quadrants[i].isDivided) {
-                console.log(this.quadrants[i].subQuadrants)
-                for (let j = 0; j < this.quadrants[i].subQuadrants.length; j++) {
-                    this.drawWhiteQuadrant(j + 1,this.quadrants[i].subQuadrants[j].coords);
-                    console.log(this.quadrants[i].subQuadrants[j].coords);
+            const currentQuadrant = this.quadrants[i];
+
+            if (currentQuadrant.isDivided) {
+                for (let j = 0; j < this.quadrants.length; j++) {
+                    const currentSubQuadrant = currentQuadrant.subQuadrants[j];
+                    this.drawWhiteQuadrant(currentSubQuadrant.id,currentSubQuadrant.coords);
                 };
+
             // if it is set to false then only draw a square around the quadrant
             } else {
-                this.drawWhiteQuadrant(i,this.quadrants[i]['coords']);
+                this.drawWhiteQuadrant(currentQuadrant.id,currentQuadrant.coords);
             };
         };
     };
