@@ -1,3 +1,19 @@
+import { atem } from "./atemHelpers.js";
+
+
+// FOR TESTING PURPOSES ONLY, DELETE THIS LATER
+const inputMap = {
+    'sq9':   1,
+    'sq10':  2,
+    'sq11':  3,
+    'sq12':  4,
+    'sq13':  5,
+    'sq14':  6,
+    'sq15':  7,
+    'sq16':  8,
+};
+
+
 class Quadrant {
     constructor(x,y,width,height,id,xIdx,yIdx) {
         this.coords = {
@@ -18,8 +34,7 @@ class Quadrant {
         this.subQuadrants = [];
 
         this.isLive = false;
-        this.isActive = false;
-        this.isProgram = true;
+        this.isProgram = false;
         this.isPreview = false;
         this.isDivided = false;
     };
@@ -38,6 +53,10 @@ class SubQuadrant {
             divisor: 4,
         };
         this.id = id;
+
+        this.isLive = false;
+        this.isProgram = false;
+        this.isPreview = false;
     };
 };
 
@@ -203,14 +222,15 @@ export default class Multiview {
     };
 
 
-    setTallies() {    
+    setTallies() {
+
         for (let i = 0; i < this.allQuadrants.length; i++) {
     
             const currentQuadrant = this.allQuadrants[i];
     
             if (!currentQuadrant.isProgram && !currentQuadrant.isPreview) {
-                if (currentQuadrant[i].isLive) {
-                    drawRedTally(currentQuadrant.coords);
+                if (currentQuadrant.isLive) {
+                    this.drawRedTally(currentQuadrant.coords);
                 };
             };
         };
@@ -234,8 +254,6 @@ export default class Multiview {
     setComputedWidth() {
         this.COMPUTEDWIDTH = this.stripPx(getComputedStyle(this.canvas).width);
         this.COMPUTEDHEIGHT = this.stripPx(getComputedStyle(this.canvas).height);
-
-        console.log(this.COMPUTEDWIDTH,this.COMPUTEDHEIGHT)
     };
 
 
@@ -293,8 +311,6 @@ export default class Multiview {
                 width: width,
                 height: height,
             };
-
-            console.log(rect)
     
             if (this.hit(rect,e.x,e.y)) {
                 return subQuadrant;
@@ -306,20 +322,37 @@ export default class Multiview {
     setClickListener() {
         // handle clicking on multiview
         document.addEventListener('click',(e) => {
+
+            this.clearAllIsLive();
+
             const clickedOnSquare = this.getClickedQuadrant(e);
 
             // logic for clicking on a subquadrant
             if (clickedOnSquare && clickedOnSquare.isDivided) {        
                     const clickedOnsubQuadrant = this.getClickedSubQuadrant(e,clickedOnSquare);
+                    clickedOnsubQuadrant.isLive = true;
+
+                    // temporary code to test sending messages to ATEM
+                    // by tapping on quadrants
+                    atem.changeProgramInput(inputMap[clickedOnsubQuadrant.id]);
                     console.log(clickedOnsubQuadrant);
 
                 // logic for clicking on a quadrant
                 } else if (clickedOnSquare && !clickedOnSquare.isDivided) {
+
                     clickedOnSquare.isLive = true;
+                    atem.changeProgramInput(inputMap[clickedOnSquare.id]);
                     console.log(clickedOnSquare);
+
                 } else {
                     return;
                 }
             });
+        };
+
+
+        draw() {
+            this.initWhiteGrid();
+            this.setTallies();
         };
 };

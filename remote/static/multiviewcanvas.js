@@ -1,4 +1,5 @@
 import Multiview from './MultiviewObj.js';
+import { atem } from './atemHelpers.js';
 
 const canvas = document.querySelector('canvas');
 const video = document.querySelector('video');
@@ -42,19 +43,12 @@ export default function initDrawImage(video) {
 
     video.onplay = function() {
 
-    setClickListener();
-
-    // initial setting of the offsetTop and offsetLeft values that will eventually change on resize
-    offsetTop = canvas.offsetTop;
-    offsetLeft = canvas.offsetLeft;
-
     clearInterval(canvasInterval);
         canvasInterval = window.setInterval(() => {
             drawImage(video);
-            initWhiteGrid();
-            setTallies();
-            testOffsets();
+            mv.draw();
 
         }, 1000 / FPS);
     };
+
 };
