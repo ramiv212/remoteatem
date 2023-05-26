@@ -134,3 +134,6 @@ dist
 # ssl
 .pem
 *.pem
+
+
+test.js
