@@ -5,13 +5,15 @@
   "main": "./main/main.js",
   "scripts": {
     "localStart": "set LOCALHOST=1 &&  electron .",
-    "remoteStart": "set LOCALHOST=0 &&  electron ."
+    "remoteStart": "set LOCALHOST=0 &&  electron .",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^16.0.3",
-    "electron": "^24.1.2"
+    "electron": "^24.1.2",
+    "jest": "^29.5.0"
   },
   "dependencies": {
     "applest-atem": "^0.2.4",
