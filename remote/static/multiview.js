@@ -1,7 +1,6 @@
 import { atem } from "./atemHelpers.js"
 import initDrawImage from "./multiviewcanvas.js";
 
-const remoteVideoElement = document.getElementById('remoteview');
 
 const multiView = document.getElementById('multiview');
 
@@ -42,46 +41,6 @@ function addToCorrectQuadrant(index) {
     };
 };
 
-// function to handle what happens when the window is clicked on
-const multiViewOnclickFunction = function (e,i) {
-    multiViewWindowDivs.forEach((window) => {
-        window.classList.remove("live");
-    });
-
-    e.target.classList.add("live");
-    console.log(i);
-    const index = addToCorrectQuadrant(i);
-    console.log(index);
-    // temporary code to test sending messages to ATEM
-    // by tapping on quadrants
-    atem.changeProgramInput(index);
-};
-
-
-function initMultiviewOnclicks(multiViewOnclickFunction) {
-    const quadrants = document.getElementsByClassName('subquadrant-window');
-    for (let i = 0; i < quadrants.length; i++) {
-        quadrants[i].onclick = (e) => {
-            multiViewOnclickFunction(e,i);
-        };
-
-        // add this quadrant div to multiViewWindowDivs
-        // this list is used to clear the "Live" or "Preview" state on all other windows when one is clicked.
-        multiViewWindowDivs.push(quadrants[i]);
-    };
-
-    const subQuadrants = document.getElementsByClassName('quadrant-window');
-    for (let i = 0; i < subQuadrants.length; i++) {
-        subQuadrants[i].onclick = (e) => {
-            multiViewOnclickFunction(e,i);
-        };
-
-        // add this quadrant div to multiViewWindowDivs
-        // this list is used to clear the "Live" or "Preview" state on all other windows when one is clicked.
-        multiViewWindowDivs.push(subQuadrants[i]);
-    };
-};
-
 
 // take the width of the multiview and divide it by 1.78
 // set this new float value to the window height
@@ -106,8 +65,8 @@ function setRemoteVideoPosition(remoteVideo,multiViewDiv) {
 };
 
 
-setMultiviewWidth(multiView);
-setRemoteVideoPosition(remoteVideoElement,multiView);
+// setMultiviewWidth(multiView);
+// setRemoteVideoPosition(remoteVideoElement,multiView);
 initDrawImage(remoteVideoElement);
 
 
@@ -123,59 +82,6 @@ window.addEventListener('scroll',(_e) => {
 });
 
 
-function divideQuadrant(quadrantNumber) {
-    const quadrantDiv = document.getElementById(`qw${quadrantNumber}`);
-    const subQuadrantDiv = document.getElementById(`s${quadrantNumber}`);
-
-    quadrantDiv.style.display = 'none';
-    subQuadrantDiv.style.display = 'grid';
-};
-
-function unDivideQuadrant(quadrantNumber) {
-    const quadrantDiv = document.getElementById(`qw${quadrantNumber}`);
-    const subQuadrantDiv = document.getElementById(`s${quadrantNumber}`);
-
-    quadrantDiv.style.display = 'grid';
-    subQuadrantDiv.style.display = 'none';
-};
-
-function initConfigMultiviewWindows(multiviewGridConfig,gridNumber) {
-    let displaySubquadrant = multiviewGridConfig[gridNumber];
-    if (displaySubquadrant) {
-        divideQuadrant(gridNumber);
-    } else {
-        unDivideQuadrant(gridNumber);
-    };
-};
-
-function configMultiviewWindows(multiviewGridConfig,gridNumber) {
-    let displaySubquadrant = multiviewGridConfig[gridNumber];
-
-    if (!displaySubquadrant) {
-        divideQuadrant(gridNumber);
-    } else {
-        unDivideQuadrant(gridNumber);
-    };
-
-    multiviewGridConfig[gridNumber] = !multiviewGridConfig[gridNumber];
-};
-
-function windowConfigButtonsActions(windowButtons) {
-    for (let i = 1; i < 5; i++) {
-        windowButtons[i].onclick = () => {configMultiviewWindows(multiviewGridConfig,i)};
-    };
-};
-
-function initWindowDivisions(multiviewGridConfig) {
-    for (let i = 1; i < 5; i++) {
-        initConfigMultiviewWindows(multiviewGridConfig,i);
-    };
-};
-
-
 export function initMultiview() {
-    initMultiviewOnclicks(multiViewOnclickFunction);
-    initWindowDivisions(multiviewGridConfig);
-    windowConfigButtonsActions(windowButtons);
 };
     

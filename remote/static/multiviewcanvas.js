@@ -1,5 +1,4 @@
 import Multiview from './MultiviewObj.js';
-import { atem } from './atemHelpers.js';
 
 const canvas = document.querySelector('canvas');
 const video = document.querySelector('video');
@@ -24,10 +23,11 @@ function drawImage() {
 
 
 
-export default function initDrawImage(video) {
+export default function drawCanvas(video) {
 
     canvasInterval = window.setInterval(() => {
         drawImage(video);
+        mv.draw();
     }, 1000 / FPS);
 
 

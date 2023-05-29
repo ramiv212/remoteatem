@@ -1,112 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="multiview.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="multiview.css" />
     <title>Document</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <div id="app">
-        
-        <canvas width="1920" height="1080" style="margin: auto;"></canvas>
-            <video
-            id="remoteview"
-            preload="auto"
-            autoplay
-            playsinline
-            webkit-playsinline
-            muted
-            hidden
-            >
-        </video>
+      <canvas width="1920" height="1080" style="margin: auto"></canvas>
+      <video
+        id="remoteview"
+        preload="auto"
+        autoplay
+        playsinline
+        webkit-playsinline
+        muted
+        hidden
+      ></video>
 
+      <!-- <video id="remoteview" autoplay="" muted="" playsinline="" hidden></video> -->
 
-        <!-- <video id="remoteview" autoplay="" muted="" playsinline="" hidden></video> -->
-
-        <video id="selfview" autoplay="" muted="" playsinline=""></video>
+      <video id="selfview" autoplay="" muted="" playsinline=""></video>
     </div>
 
-
-
-    <div id="multiview-container">
-        <div id="top-bar" style="display: flex; flex-direction: column; gap: 4px;">
-            <div>
-                <button id="windowButton1">Window1</button>
-                <button id="windowButton2">Window2</button>
-            </div>
-            <div>
-                <button id="windowButton3">Window3</button>
-                <button id="windowButton4">Window4</button>
-            </div>
+    <!-- OFF CANVAS - Settings Menu -->
+    
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasLabel">Settings</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-
-        <div id="multiview">
-            <div class="multiviewQuadrant" id="q1">
-                <div class="quadrant-window" id="qw1"></div>
-                <div class="subquadrants" id="s1">
-                    <div class="subquadrant-window" id="q1w1">
-                    </div>
-                    <div class="subquadrant-window" id="q1w2">
-                    </div>
-                    <div class="subquadrant-window" id="q1w3">
-                    </div>
-                    <div class="subquadrant-window" id="q1w4">
-                    </div>
-                </div>
-            </div>
-            <div class="multiviewQuadrant" id="q2">
-                <div class="quadrant-window" id="qw2"></div>
-                <div class="subquadrants" id="s2"> 
-                    <div class="subquadrant-window" id="q2w1">
-                    </div> 
-                    <div class="subquadrant-window" id="q2w2">
-                    </div> 
-                    <div class="subquadrant-window" id="q2w3">
-                    </div> 
-                    <div class="subquadrant-window" id="q2w4">
-                    </div>
-                </div>
-            </div>
-            <div class="multiviewQuadrant" id="q3">
-                <div class="quadrant-window" id="qw3"></div>
-                <div class="subquadrants" id="s3">
-                    <div class="subquadrant-window" id="q3w1">
-                    </div>
-                    <div class="subquadrant-window" id="q3w2">
-                    </div>
-                    <div class="subquadrant-window" id="q3w3">
-                    </div>
-                    <div class="subquadrant-window" id="q3w4">
-                    </div>
-                </div>
-            </div>
-            <div class="multiviewQuadrant" id="q4">
-                <div class="quadrant-window" id="qw4"></div>
-                <div class="subquadrants" id="s4">
-                    <div class="subquadrant-window" id="q4w1">
-                    </div>
-                    <div class="subquadrant-window" id="q4w2">
-                    </div>
-                    <div class="subquadrant-window" id="q4w3">
-                    </div>
-                    <div class="subquadrant-window" id="q4w4">
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <div class="offcanvas-body">
+            <div class="offcanvas-body">
+                <div class="offcanvas-body-inner">
+                  <h6 style="text-align: center">Multiview Configuration</h6>
         
-        <select id="camera-select"></select><br>
-        <select id="audio-select"></select>
-        <br><br>
+                  <div style="margin: auto; padding: 0; gap: 0">
+                    <button
+                      id="window-button1"
+                      class="window-button"
+                      style="position: relative"
+                      type="button"
+                    >
+                      <div id="mv1-mini-grid">
+                        <div class="horizontal-line"></div>
+                        <div class="vertical-line"></div>
+                      </div>
+                    </button>
+        
+                    <button
+                      id="window-button2"
+                      class="window-button"
+                      style="position: relative"
+                      type="button"
 
+                    >
+                      <div id="mv2-mini-grid">
+                        <div class="horizontal-line"></div>
+                        <div class="vertical-line"></div>
+                      </div>
+                    </button>
+                  </div>
+        
+                  <div style="margin: auto; padding: 0">
+                    <button
+                      id="window-button3"
+                      class="window-button"
+                      style="position: relative"
+                      type="button"
+
+                    >
+                      <div id="mv3-mini-grid">
+                        <div class="horizontal-line"></div>
+                        <div class="vertical-line"></div>
+                      </div>
+                    </button>
+        
+                    <button
+                      id="window-button4"
+                      class="window-button"
+                      style="position: relative"
+                      type="button"
+
+                    >
+                      <div id="mv4-mini-grid">
+                        <div class="horizontal-line"></div>
+                        <div class="vertical-line"></div>
+                      </div>
+                    </button>
+                  </div>
+        
+                  <div style="margin-top: 50px">
+                    <select id="camera-select"></select
+                    ><br />
+                    <select id="audio-select"></select>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+
+    <div id="footer-bar">
+        <button class="btn btn-primary" id="settings-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvasExample">
+            Settings
+          </button>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/webrtc.js" type="module" async defer></script>
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    
+  </body>
 </html>

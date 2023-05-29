@@ -76,6 +76,27 @@ export default class Multiview {
         this.quadrants = [];
         this.subQuadrants = [];
 
+
+        this.offcanvas = document.getElementsByClassName('offcanvas')[0];
+        this.settingsButton = document.getElementById('settings-button');
+        this.closeSettingsButton = document.getElementsByClassName('btn-close')[0];
+        
+        this.mvConfigButtons = [
+            this.windowConfigButton1 = document.getElementById('window-button1'),
+            this.windowConfigButton2 = document.getElementById('window-button2'),
+            this.windowConfigButton3 = document.getElementById('window-button3'),
+            this.windowConfigButton4 = document.getElementById('window-button4')
+        ];
+
+        
+        this.mvConfigMiniGrid = [
+            this.mv1MiniGrid = document.getElementById('mv1-mini-grid'),
+            this.mv2MiniGrid = document.getElementById('mv2-mini-grid'),
+            this.mv3MiniGrid = document.getElementById('mv3-mini-grid'),
+            this.mv4MiniGrid = document.getElementById('mv4-mini-grid'),
+        ];
+
+
         // init
         this.initQuadrants();
         this.initSubQuadrants();
@@ -92,8 +113,7 @@ export default class Multiview {
         this.allQuadrants = this.quadrants.concat(this.subQuadrants);
         this.setMultiviewOffset();
         this.setWindowResizeListener();
-        this.initWhiteGrid();
-        this.setClickListener();
+        this.setClickListeners();
 
     };
 
@@ -319,9 +339,9 @@ export default class Multiview {
     };
 
 
-    setClickListener() {
-        // handle clicking on multiview
-        document.addEventListener('click',(e) => {
+    onMultiviewClick(e) {
+        // only run this function if offcanvas is hidden
+        if (!this.offcanvas.classList.contains('show')) {
 
             this.clearAllIsLive();
 
@@ -346,8 +366,47 @@ export default class Multiview {
 
                 } else {
                     return;
-                }
+                };
+        };
+    };
+
+
+    handleMultiviewGridChange() {
+        // 
+    };
+
+
+    setWindowConfigButtons() {
+        for (let i = 0; i < this.mvConfigMiniGrid.length; i++) {
+
+            this.mvConfigButtons[i].onclick = () => {
+
+                const idx = i;
+                this.quadrants[idx].isDivided = !this.quadrants[idx].isDivided;
+                console.log(this.quadrants[idx].isDivided)
+
+                // for (let i = 0; i < this.mvConfigMiniGrid.length; i++) {
+                //     console.log(this.quadrants[i].isDivided);
+                //     if (this.quadrants[i].isDivided) {
+                //         this.mvConfigMiniGrid[i].style.visibility = 'visible';
+                //     } else {
+                //         this.mvConfigMiniGrid[i].style.visibility = 'hidden';
+                //     };
+                // };
+            };
+
+        };   
+    };
+
+
+    setClickListeners() {
+            // handle clicking on multiview
+            // only allow click on multiview if offcanvas is hidden
+                document.addEventListener('click',(e) => {
+                    this.onMultiviewClick(e);
             });
+
+            this.setWindowConfigButtons();  
         };
 
 

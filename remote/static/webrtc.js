@@ -1,5 +1,5 @@
 import { start,resizeVideoElement } from "./media.js";
-import { initMultiview } from "./multiview.js";
+import drawCanvas from "./multiviewcanvas.js";
 import { startDataChannel } from "./datachannel.js";
 import { atem } from "./atemHelpers.js"
 
@@ -25,9 +25,9 @@ const servers = {
 };
 
 
-
-// init multiview JS
-initMultiview();
+// init the canvas element logic
+const remoteVideoElement = document.getElementById('remoteview');
+drawCanvas(remoteVideoElement);
 
 
 export const peerConnection = new RTCPeerConnection(servers);
