@@ -114,6 +114,8 @@ export default class Multiview {
         this.setMultiviewOffset();
         this.setWindowResizeListener();
         this.setClickListeners();
+        this.initWhiteGrid();
+        this.setMiniGridVisibility();
 
     };
 
@@ -214,13 +216,11 @@ export default class Multiview {
 
 
     initWhiteGrid() {
-
         for (let i = 0; i < this.quadrants.length; i++) {
 
             // if the config for this quadrant is set to true, then draw a subQuadrant of four squares sin this quadrant
             const currentQuadrant = this.quadrants[i];
             
-
             if (currentQuadrant.isDivided) {
                 for (let j = 0; j < this.quadrants.length; j++) {
                     const currentSubQuadrant = currentQuadrant.subQuadrants[j];
@@ -234,6 +234,18 @@ export default class Multiview {
         };
     };
 
+    
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+
+    resetCanvas() {
+        this.clearCanvas();
+        this.initWhiteGrid();
+        this.setTallies();
+    };
+
 
     clearAllIsLive() {
         for (let i = 0; i < this.allQuadrants.length; i++) {
@@ -243,7 +255,6 @@ export default class Multiview {
 
 
     setTallies() {
-
         for (let i = 0; i < this.allQuadrants.length; i++) {
     
             const currentQuadrant = this.allQuadrants[i];
@@ -344,6 +355,7 @@ export default class Multiview {
         if (!this.offcanvas.classList.contains('show')) {
 
             this.clearAllIsLive();
+            console.log('clearallislive')
 
             const clickedOnSquare = this.getClickedQuadrant(e);
 
@@ -356,6 +368,7 @@ export default class Multiview {
                     // by tapping on quadrants
                     atem.changeProgramInput(inputMap[clickedOnsubQuadrant.id]);
                     console.log(clickedOnsubQuadrant);
+                    this.resetCanvas();
 
                 // logic for clicking on a quadrant
                 } else if (clickedOnSquare && !clickedOnSquare.isDivided) {
@@ -363,6 +376,7 @@ export default class Multiview {
                     clickedOnSquare.isLive = true;
                     atem.changeProgramInput(inputMap[clickedOnSquare.id]);
                     console.log(clickedOnSquare);
+                    this.resetCanvas();
 
                 } else {
                     return;
@@ -372,11 +386,27 @@ export default class Multiview {
 
 
     handleMultiviewGridChange() {
-        // 
+        this.clearAllIsLive();
+        this.clearCanvas();
+        this.initWhiteGrid();
+        this.setMiniGridVisibility();
+        this.setTallies();
     };
 
 
-    setWindowConfigButtons() {
+    setMiniGridVisibility() {
+        for (let i = 0; i < this.mvConfigMiniGrid.length; i++) {
+            console.log(this.quadrants[i].isDivided);
+            if (this.quadrants[i].isDivided) {
+                this.mvConfigMiniGrid[i].style.visibility = 'visible';
+            } else {
+                this.mvConfigMiniGrid[i].style.visibility = 'hidden';
+            };
+        };
+    };
+
+
+    setMvConfigButtons() {
         for (let i = 0; i < this.mvConfigMiniGrid.length; i++) {
 
             this.mvConfigButtons[i].onclick = () => {
@@ -385,14 +415,7 @@ export default class Multiview {
                 this.quadrants[idx].isDivided = !this.quadrants[idx].isDivided;
                 console.log(this.quadrants[idx].isDivided)
 
-                // for (let i = 0; i < this.mvConfigMiniGrid.length; i++) {
-                //     console.log(this.quadrants[i].isDivided);
-                //     if (this.quadrants[i].isDivided) {
-                //         this.mvConfigMiniGrid[i].style.visibility = 'visible';
-                //     } else {
-                //         this.mvConfigMiniGrid[i].style.visibility = 'hidden';
-                //     };
-                // };
+                this.handleMultiviewGridChange();
             };
 
         };   
@@ -406,12 +429,10 @@ export default class Multiview {
                     this.onMultiviewClick(e);
             });
 
-            this.setWindowConfigButtons();  
+            this.setMvConfigButtons();  
         };
 
 
         draw() {
-            this.initWhiteGrid();
-            this.setTallies();
         };
 };
