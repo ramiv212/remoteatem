@@ -62,9 +62,11 @@ class SubQuadrant {
 
 
 export default class Multiview {
-    constructor(canvas) {
+    constructor(canvas,video,videoConfig) {
 
-        this.canvas = canvas
+        this.canvas = canvas;
+        this.video = video;
+        this.videoConfig = videoConfig;
         this.ctx = this.canvas.getContext('2d', { alpha: false });
 
         this.CANVASWIDTH = 1920;
@@ -116,6 +118,7 @@ export default class Multiview {
         this.setClickListeners();
         this.initWhiteGrid();
         this.setMiniGridVisibility();
+        this.mvDrawCount = 0;
 
     };
 
@@ -216,6 +219,8 @@ export default class Multiview {
 
 
     initWhiteGrid() {
+        this.ctx.globalCompositeOperation = 'source-over';
+
         for (let i = 0; i < this.quadrants.length; i++) {
 
             // if the config for this quadrant is set to true, then draw a subQuadrant of four squares sin this quadrant
@@ -432,7 +437,11 @@ export default class Multiview {
             this.setMvConfigButtons();  
         };
 
+        drawImage() {
+            this.ctx.drawImage(this.video, 0, 0, this.videoConfig.WIDTH, this.videoConfig.HEIGHT);
 
-        draw() {
+            this.initWhiteGrid();
+            this.setTallies();
+
         };
 };
