@@ -526,27 +526,37 @@ export default class Multiview {
 
 
     setAllMiniLabels() {
+
+        const defaultNameMapArray = Object.entries(defaultNameMap);
+
         for (let i = 0; i < this.quadrants.length; i++) {
             this.mvConfigQuadLabelTexts[i].innerText = this.quadrants[i].label;
+
 
             // logic to change the update the inputMap
             // turn the defaultNameMap into an array of arrays so that it can be filtered
             // this is because we're trying to get the Input ID from the label,
             // and the object is set up as Input ID as the key and label as value (backwards fron what we need);
-
-            const defaultNameMapArray = Object.entries(defaultNameMap);
-
             const newAtemInputID = defaultNameMapArray.filter((arr) => {
                 if (arr[1] === this.quadrants[i].label) return arr;
             });
 
-            console.log(newAtemInputID[0][0]);
-
             inputMap[this.quadrants[i].id] = newAtemInputID[0][0];
+            this.quadrants[i].input = newAtemInputID[0][0];
         };
 
+        // same but for subquadrants
         for (let i = 0; i < this.subQuadrants.length; i++) {
             this.mvConfigSubQuadLabelTexts[i].innerText = this.subQuadrants[i].label;
+
+            const newAtemInputID = defaultNameMapArray.filter((arr) => {
+                console.log(this.subQuadrants[i].label)
+                console.log(arr[1])
+                if (arr[1] === this.subQuadrants[i].label) return arr;
+            });
+
+            inputMap[this.subQuadrants[i].id] = newAtemInputID[0][0];
+            this.subQuadrants[i].input = newAtemInputID[0][0];
         };
     };
 
