@@ -131,3 +131,39 @@ body {
     padding-left: 100px;
     padding-right: 100px;
 }
+
+#mini-grid-parent {
+    margin: auto;
+    width: 300px;
+    display: grid;
+    grid-template-columns: repeat(4);
+    grid-template-rows: repeat(4);
+}
+
+.mini-grid-quad {
+    position: relative;
+    outline: white solid 2px;
+    height: 90px;
+}
+
+.mini-grid-subquad {
+    position: relative;
+    outline: white solid 2px;
+}
+
+.mv-config-quad-label {
+    position: absolute;
+    text-align: center;
+    left:53px;
+    top: 30px;
+    user-select: none;
+}
+
+.mv-config-subquad-label {
+    position: absolute;
+    text-align: center;
+    left:22px;
+    top: 15px;
+    user-select: none;
+    font-size: 10px;
+}

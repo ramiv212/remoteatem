@@ -39,60 +39,145 @@
                 <div class="offcanvas-body-inner">
                   <h6 style="text-align: center">Multiview Configuration</h6>
         
-                  <div style="margin: auto; padding: 0; gap: 0">
-                    <button
-                      id="window-button1"
-                      class="window-button"
-                      style="position: relative"
-                      type="button"
-                    >
-                      <div id="mv1-mini-grid">
-                        <div class="horizontal-line"></div>
-                        <div class="vertical-line"></div>
-                      </div>
-                    </button>
-        
-                    <button
-                      id="window-button2"
-                      class="window-button"
-                      style="position: relative"
-                      type="button"
+                  <div id="mini-grid-parent">
 
-                    >
-                      <div id="mv2-mini-grid">
-                        <div class="horizontal-line"></div>
-                        <div class="vertical-line"></div>
-                      </div>
-                    </button>
+                    <!-- Mini Config Grid Quadrants -->
+                    <div id="mv-mini-grid-quad-1" class="mini-grid-quad" 
+                    style="grid-column-start: 1; grid-column-end: 3; grid-row-start: 1; grid-row-end: 3;">
+                    <div class="mv-config-quad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-quad-2" class="mini-grid-quad" 
+                    style="grid-column-start: 3; grid-column-end: 5; grid-row-start: 1; grid-row-end: 3;">
+                    <div class="mv-config-quad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-quad-3" class="mini-grid-quad" 
+                    style="grid-column-start: 1; grid-column-end: 3; grid-row-start: 3; grid-row-end: 5;">
+                    <div class="mv-config-quad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-quad-4" class="mini-grid-quad" 
+                    style="grid-column-start: 3; grid-column-end: 5; grid-row-start: 3; grid-row-end: 5;">
+                    <div class="mv-config-quad-label">Cam1</div>
+                    </div>
+
+                    
+
+                    <!-- Mini Config Grid Subquadrants -->
+
+                    <div id="mv-mini-grid-subquad-1" class="mini-grid-subquad mini-quad-1" 
+                    style="grid-column-start: 1; grid-column-end: 2; grid-row-start: 1; grid-row-end: 2;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-2" class="mini-grid-subquad mini-quad-1" 
+                    style="grid-column-start: 2; grid-column-end: 3; grid-row-start: 1; grid-row-end: 2;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-3" class="mini-grid-subquad mini-quad-2" 
+                    style="grid-column-start: 3; grid-column-end: 4; grid-row-start: 1; grid-row-end: 2;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-4" class="mini-grid-subquad mini-quad-2" 
+                    style="grid-column-start: 4; grid-column-end: 5; grid-row-start: 1; grid-row-end: 2;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+
+
+                    <div id="mv-mini-grid-subquad-5" class="mini-grid-subquad mini-quad-1" 
+                    style="grid-column-start: 1; grid-column-end: 2; grid-row-start: 2; grid-row-end: 3;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-6" class="mini-grid-subquad mini-quad-1" 
+                    style="grid-column-start: 2; grid-column-end: 3; grid-row-start: 2; grid-row-end: 3;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-7" class="mini-grid-subquad mini-quad-2" 
+                    style="grid-column-start: 3; grid-column-end: 4; grid-row-start: 2; grid-row-end: 3;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-8" class="mini-grid-subquad mini-quad-2" 
+                    style="grid-column-start: 4; grid-column-end: 5; grid-row-start: 2; grid-row-end: 3;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+
+
+                    <div id="mv-mini-grid-subquad-9" class="mini-grid-subquad mini-quad-3" 
+                    style="grid-column-start: 1; grid-column-end: 2; grid-row-start: 3; grid-row-end: 4;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-10" class="mini-grid-subquad mini-quad-3" 
+                    style="grid-column-start: 2; grid-column-end: 3; grid-row-start: 3; grid-row-end: 4;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-11" class="mini-grid-subquad mini-quad-4" 
+                    style="grid-column-start: 3; grid-column-end: 4; grid-row-start: 3; grid-row-end: 4;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-12" class="mini-grid-subquad mini-quad-4" 
+                    style="grid-column-start: 4; grid-column-end: 5; grid-row-start: 3; grid-row-end: 4;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+
+
+                    <div id="mv-mini-grid-subquad-13" class="mini-grid-subquad mini-quad-3" 
+                    style="grid-column-start: 1; grid-column-end: 2; grid-row-start: 4; grid-row-end: 5;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-14" class="mini-grid-subquad mini-quad-3" 
+                    style="grid-column-start: 2; grid-column-end: 3; grid-row-start: 4; grid-row-end: 5;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-15" class="mini-grid-subquad mini-quad-4" 
+                    style="grid-column-start: 3; grid-column-end: 4; grid-row-start: 4; grid-row-end: 5;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+                    <div id="mv-mini-grid-subquad-16" class="mini-grid-subquad mini-quad-4" 
+                    style="grid-column-start: 4; grid-column-end: 5; grid-row-start: 4; grid-row-end: 5;">
+                    <div class="mv-config-subquad-label">Cam1</div>
+                    </div>
+
+
+                    </div>
                   </div>
-        
-                  <div style="margin: auto; padding: 0">
-                    <button
-                      id="window-button3"
-                      class="window-button"
-                      style="position: relative"
-                      type="button"
-
-                    >
-                      <div id="mv3-mini-grid">
-                        <div class="horizontal-line"></div>
-                        <div class="vertical-line"></div>
-                      </div>
-                    </button>
-        
-                    <button
-                      id="window-button4"
-                      class="window-button"
-                      style="position: relative"
-                      type="button"
-
-                    >
-                      <div id="mv4-mini-grid">
-                        <div class="horizontal-line"></div>
-                        <div class="vertical-line"></div>
-                      </div>
-                    </button>
-                  </div>
+                
+                <br>
+                <div style="margin: auto;">
+                    <select id="label-select">
+                        <option>Select Assignment</option>
+                        <option>Input 1</option>
+                        <option>Input 2</option>
+                        <option>Input 3</option>
+                        <option>Input 4</option>
+                        <option>Input 5</option>
+                        <option>Input 6</option>
+                        <option>Input 7</option>
+                        <option>Input 8</option>
+                        <option>Super Source</option>
+                        <option>Media Player 1</option>
+                        <option>Media Player 2</option>
+                        <option>Color 1</option>
+                        <option>Color 2</option>
+                        <option>ME 1 Prog</option>
+                        <option>ME 1 Prev</option>
+                        <option>Black</option>
+                    </select>
+                </div>
         
                   <div style="margin-top: 50px">
                     <select id="camera-select"></select

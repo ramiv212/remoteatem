@@ -10,7 +10,6 @@ class Atem {
     // ATEM actions 
     this.actionMap = {
       changeProgramInput: ({input, me}) => {
-        console.log(`ran actual function ${input,me}`);
         this.atem.changeProgramInput(input, me);
       },
     
